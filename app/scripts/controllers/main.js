@@ -1,5 +1,5 @@
 'use strict';
-tessssst
+
 /**
  * @ngdoc function
  * @name scheduleMakerApp.controller:MainCtrl
