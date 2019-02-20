@@ -1,0 +1,40 @@
+
+<!-- <ul style="text-align: right; list-style: none;" class="font-big">
+  <li ng-repeat="item in radnici.kuvarice"
+    dnd-draggable="item"
+    dnd-type="'kuvarice'"
+    dnd-effect-allowed="copy"
+    dnd-selected="models.selected = item"
+    dnd-dragstart="onDragStart();"
+    ng-class="{'selected': models.selected === item}">
+    <p class="badge" ng-style="{'background-color': item.boja}" ng-dblclick="radnikEdit(item);" style="white-space:pre;">{{item.ime}}&#9;&#9;{{item.ukupnoDana}}</p>
+  </li>
+</ul> -->
+
+<div class="row" sticky sticky-class="sticky-div">
+
+  <ul style="list-style: none; padding-left: 5px;" class="font-big radnici-list print-html">
+    <li ng-repeat="radnik in radnici"
+        ng-class="{'selected-radnik': radnik.selected, 'editing-radnik': radnik.id === radnikEdit.id}"
+        ng-mouseover="item.hover=true;"
+        ng-mouseleave="item.hover=false;"
+        style="cursor: pointer;">
+      <p class="badge" ng-style="{'background-color': radnik.boja}" ng-click="radnikSelect(radnik);" style="white-space:pre; cursor: pointer;">{{radnik.ime}}&#9;<span ng-if="radnik.ime!=='Daliborka'">&#9;</span>{{radnik.ukupnoDana}}</p>
+      <span ng-show="item.hover" ng-click="izmeniRadnika(radnik);" style="cursor: pointer; position: relative; top: -4px;"><i class="far fa-calendar" ></i></span>
+    </li>
+  </ul>
+
+  <ul ng-show="radnikEdit === null;"
+      class="trashcan no-print"
+      dnd-list="[]"
+      dnd-dragover=""
+      dnd-drop="izbrisiIzRasporeda(item.id);">
+    <li><i class="far fa-trash-alt" style="font-size: 150px; margin-top: 76px; margin-left: 59px; opacity: 0.4;"></i></li>
+  </ul>
+
+  <div class="no-print" ng-show="radnikEdit !== null;">
+    <h4 style="color: red; text-align: center; cursor: pointer;" ng-click="closeRadnikEdit()">ZATVORI&nbsp;<i class="fas fa-times" ></i></h4>
+    <multiple-date-picker ng-model="neradniDani" month="currentMonth" disable-navigation="true"></multiple-date-picker>
+  </div>
+
+</div>

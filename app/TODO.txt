@@ -1,0 +1,71 @@
+orderBy unutar smene po ID-u
+
+// treba da se izbacuju samo kad se element izvuce van tabele, sad ne moze da se prebacuje iz jedne kolone u drugu
+
+// ne radi brisanje iz rasporeda
+
+// select samo u okviru istog tipa, ima bag sa neradnim danima
+
+insert ima bag kad su selektovani razliciti tipovi, insertuje duplo ponekad ??
+
+// ne disejbluje polja ako uradis select pa edit
+
+ispisi ukupan broj radnih dana na print
+
+na move finish se brisu disejblovani dani ako je neko selektovan sa strane
+
+dnd-dragend i dnd-canceled se izgleda ne pozivaju tako da ostaje placeholder ako se element ne prevuce u neko polje
+
+// za print mora da se ubaci body iz index-a, bez toga nece da crta kako treba
+
+#######################################################################################################
+
+Cim se klikne na nekog radnika u rasporedu treba da se odselektuju trenutno selektovani radnici
+
+Kada se selektuju radnik iz kuhinje i konobar, a potom jedan od njih odselektuje dolazi do problema
+
+Kod Daliborke se ne vidi znak za cistaca u rasporedu, prilikom stampe se vidi
+
+Nekako sam uspeo da poremetim izgled rasporeda prilikom stampe pogledati I smenu kod konobara, kada se
+doda npr neki praznik(sto povecava prvu kolonu) vraca se na normalu.
+
+#######################################################################################################
+
+
+Reorder unutar polja dragdrop
+
+Samo jedan selektovan
+
+Da moze da se salje samo do odredjene nedelje raspored
+
+Nedelja da bude i odozgo uokvirena
+
+Deselektuj sve na save
+
+Insert ne radi na malu visinu polja
+
+Drugacija boja dana u kalendaru za bolovanje i godisnji odmor
+
+#######################################################################################################
+
+
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-touch/angular-touch.js"></script>
+<script src="bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
+<script src="bower_components/moment/min/moment.min.js"></script>
+<script src="bower_components/moment/locale/sr.js"></script>
+<script src="bower_components/angular-ui/build/angular-ui.js"></script>
+<script src="bower_components/angular-multiple-date-picker/dist/multipleDatePicker.min.js"></script>
+<script src="bower_components/ngSticky/lib/sticky.js"></script>
+
+
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" media="all">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<link rel="stylesheet" href="bower_components/angular-multiple-date-picker/dist/multipleDatePicker.css" />

@@ -1,0 +1,25 @@
+<!-- <td class="radnici" ng-repeat="smena in list.smene track by $index" ng-style="{'border-right': $last ? '3px solid black' : ''}" ng-click="!list.disabled && smenaDodaj(selected, smena, type);" ng-class="{'disabled': list.disabled, 'placeholder': dragging === type}">
+  <ul dnd-list
+      dnd-drop="!list.disabled && smenaDrop(item, smena)"
+      dnd-allowed-types="[type]"
+      dnd-horizontal-list="true"
+      class="list-inline">
+
+    <li ng-repeat="radnik in smena"
+        dnd-type="type"
+        dnd-draggable="radnik"
+        dnd-dragstart="start(radnik)"
+        dnd-canceled="dragging=null"
+        dnd-moved="moved(smena, $index)"
+        ng-click="radnik.edit=!radnik.edit; $event.stopPropagation()">
+
+      <span uib-popover-template="'radnik_modal.html'" class="badge" style="font-size: 20px; width: 102px; cursor: pointer;" ng-style="{'background-color': radnik.boja}">
+        {{radnik.ime}}<span ng-if="radnik.cistac"> <i class="fas fa-broom" ></i></span>
+      </span>
+      <span class="vreme-dolaska" ng-show="radnik.vremeDolaska">- {{radnik.vremeDolaska}}</span>
+
+    </li>
+  </ul>
+</td> -->
+
+<span ng-repeat="smena in list.smene">Q</span>
