@@ -5,30 +5,28 @@
       <!-- <select ng-model="raspored.izabraniMesec" ng-options="formatMonth(mesec) for mesec in raspored.meseci" ng-change="osveziModel(raspored.izabraniMesec)">
       </select> -->
 
-      <!-- <select ng-model="aktivniMesec" ng-options="mesec.ime for mesec in raspored.meseci">
+      <!-- <select ng-model="selectedMesec" ng-options="mesec for mesec in availableMonths" ng-change="getModel(selectedMesec)">
       </select> -->
 
-      {{aktivniMesec.ime}}
+      <!-- {{aktivniMesec.ime}} -->
 
-      <!-- <select ng-model="aktivniMesec">
-        <option ng-repeat="mesec in raspored.meseci track by $index" ng-value="mesec.ime"></option>
-      </select> -->
+      <select ng-model="selectedMesec" ng-change="getModel(selectedMesec)">
+        <option ng-repeat="mesec in availableMonths" ng-value="mesec">{{mesec}}</option>
+      </select>
 
       <button ng-click="printToCart('printSectionId')" class="button" style="margin-left: 20px;">Print <i class="fas fa-print" ></i></button>
-      <!-- <button type="button" ng-click="popuniModel()">Popuni</button> -->
+      <button type="button" ng-click="popuniModel()">Popuni</button>
       <button type="button" ng-click="sacuvajModel()">Save <i class="fas fa-save" ng-show="!savedModel"></i><i class="fas fa-thumbs-up" ng-show="savedModel"></i></button>
 
     </h2>
 
-
-
     <div class="col-lg-2">
-      <radnici-list radnici="radnici.kuvarice"
-                    selected="selectedKuvarice"
+      <radnici-list radnici="model.radnici.kuvarice"
+                    selected="selectedRadnik"
                     disable-neradni-dani="disableNeradniDani"
                     reset-neradni-dani="resetNeradniDani"
                     izbrisi-iz-rasporeda="izbrisiIzRasporeda"
-                    current-month="aktivniMesec.momentModel">
+                    current-month="model.mesec.momentModel">
       </radnici-list>
 
 
@@ -88,7 +86,7 @@
         </tr>
 
         <!-- <tr ng-repeat="dan in raspored.dani" ng-class="{'border-bottom-emphasized': dan.nedelja, 'disabled': dan.disabled}"> -->
-        <tr ng-repeat="dan in aktivniMesec.dani" ng-class="{'border-bottom-emphasized': dan.nedelja, 'disabled': dan.disabled}">
+        <tr ng-repeat="dan in model.mesec.dani" ng-class="{'border-nedelja': dan.nedelja, 'disabled': dan.disabled}">
 
           <td ng-style="{
                 'font-weight': dan.nedelja ? 'bold' : 'normal',
@@ -99,11 +97,11 @@
                 <span ng-show="!dan.edit && dan.komentar;"> - {{dan.komentar}}</span>
           </td>
 
-          <!-- <grupa-radnika list="dan.radnici.kuvarice" type="'kuvarice'" smena-dodaj="dodajUSmenu" drag-start="radnikDragStart" dragging="radnikDragging" moved="radnikMoved" smena-drop="smenaDrop" selected="selectedKuvarice"></grupa-radnika> -->
+          <!-- <grupa-radnika list="dan.radnici.kuvarice" type="'kuvarice'" smena-dodaj="dodajUSmenu" drag-start="radnikDragStart" dragging="radnikDragging" moved="radnikMoved" smena-drop="smenaDrop" selected="selectedKuvarica"></grupa-radnika> -->
 
-          <td class="radnici" ng-repeat="smena in dan.radnici.kuvarice.smene track by $index" ng-click="!dan.radnici.kuvarice.disabled && dodajUSmenu(selectedKuvarice, smena, 'kuvarica');" ng-class="{'border-right-emphasized': $last, 'disabled': dan.radnici.kuvarice.disabled, 'placeholder': radnikDragging === 'kuvarica'}">
+          <td class="radnici" ng-repeat="smena in dan.radnici.kuvarice.smene track by $index" ng-click="!dan.radnici.kuvarice.disabled && dodajUSmenu(selectedRadnik, smena, 'kuvarica');" ng-class="{'border-right-emphasized': $last, 'disabled': dan.radnici.kuvarice.disabled, 'placeholder': radnikDragging === 'kuvarica'}">
             <ul dnd-list
-                dnd-drop="!dan.radnici.kuvarice.disabled && smenaDrop(item, smena)"
+                dnd-drop="smenaDrop(item.id, smena, dan.radnici.kuvarice.disabled)"
                 dnd-allowed-types="['kuvarice']"
                 dnd-horizontal-list="true"
                 class="list-inline">
@@ -125,9 +123,9 @@
             </ul>
           </td>
 
-          <td class="radnici" ng-repeat="smena in dan.radnici.konobari.smene track by $index" ng-style="{'border-right': $last ? '3px solid black' : ''}" ng-click="!dan.radnici.konobari.disabled && dodajUSmenu(selectedKonobari, smena, 'konobar');" ng-class="{'disabled': dan.radnici.konobari.disabled, 'placeholder': radnikDragging === 'konobar'}">
+          <td class="radnici" ng-repeat="smena in dan.radnici.konobari.smene track by $index" ng-style="{'border-right': $last ? '3px solid black' : ''}" ng-click="!dan.radnici.konobari.disabled && dodajUSmenu(selectedRadnik, smena, 'konobar');" ng-class="{'disabled': dan.radnici.konobari.disabled, 'placeholder': radnikDragging === 'konobar'}">
             <ul dnd-list
-                dnd-drop="!dan.radnici.konobari.disabled && smenaDrop(item, smena)"
+                dnd-drop="smenaDrop(item.id, smena, dan.radnici.konobari.disabled)"
                 dnd-allowed-types="['konobari']"
                 dnd-horizontal-list="true"
                 class="list-inline">
@@ -149,7 +147,7 @@
             </ul>
           </td>
 
-          <!-- <td class="radnici" ng-repeat="smena in dan.radnici.konobari.smene track by $index" ng-style="{'border-right': $last ? '3px solid black' : ''}" ng-click="!dan.radnici.konobari.disabled && dodajUSmenu(selectedKonobari, smena, 'konobar');" ng-class="{'disabled': dan.radnici.konobari.disabled}">
+          <!-- <td class="radnici" ng-repeat="smena in dan.radnici.konobari.smene track by $index" ng-style="{'border-right': $last ? '3px solid black' : ''}" ng-click="!dan.radnici.konobari.disabled && dodajUSmenu(selectedKonobar, smena, 'konobar');" ng-class="{'disabled': dan.radnici.konobari.disabled}">
             <ul dnd-list
                 dnd-drop="!dan.radnici.konobari.disabled && smenaDrop(item, smena)"
                 dnd-allowed-types="['konobari']"
@@ -170,7 +168,7 @@
             </ul>
           </td> -->
 
-          <!-- <td class="radnici" ng-repeat="smena in dan.radnici.konobari.smene track by $index" ng-click="dodajUSmenu(selectedKonobari, smena, dan, 'konobar');" ng-class="{'cell-error': smena.error}">
+          <!-- <td class="radnici" ng-repeat="smena in dan.radnici.konobari.smene track by $index" ng-click="dodajUSmenu(selectedKonobar, smena, dan, 'konobar');" ng-class="{'cell-error': smena.error}">
             <ul dnd-list
                 dnd-drop="smenaDrop(item, smena, dan)"
                 dnd-allowed-types="['konobari']"
@@ -198,12 +196,12 @@
 
     <div class="col-lg-2">
 
-      <radnici-list radnici="radnici.konobari"
-                    selected="selectedKonobari"
+      <radnici-list radnici="model.radnici.konobari"
+                    selected="selectedRadnik"
                     disable-neradni-dani="disableNeradniDani"
                     reset-neradni-dani="resetNeradniDani"
                     izbrisi-iz-rasporeda="izbrisiIzRasporeda"
-                    current-month="aktivniMesec.momentModel">
+                    current-month="model.mesec.momentModel">
       </radnici-list>
 
       <!-- <div class="row">

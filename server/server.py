@@ -3,29 +3,36 @@ from flask_cors import CORS
 import json
 from pprint import pprint
 from flask import jsonify
+import os
 
 app = Flask(__name__)
 CORS(app)
 
+MODELS_DIR = 'server/models/'
+
+if not os.path.exists(MODELS_DIR):
+    os.makedirs(MODELS_DIR)
+
 @app.route('/model', methods=['GET', 'POST'])
 def model():
     if request.method == 'GET':
-        print("getting")
+        month = request.args.get('month', default = 'null', type = str)
+        fileName = month.lower() + '.json'
+        print(fileName)
         dataModel = {}
         try:
-            file = open('model.json', 'r')
+            file = open(MODELS_DIR + fileName, 'r')
             dataModel = json.load(file)
         except IOError:
             pass
-
-        # with open('model.json') as f:
-        #     dataModel = json.load(f)
 
         return jsonify(dataModel)
     elif request.method == 'POST':
         print("posting")
         data = request.get_json(force = True)
-        with open('model.json', 'w') as outfile:
+        fileName = data['model']['mesec']['ime'].lower() + '.json'
+
+        with open(MODELS_DIR + fileName, 'w+') as outfile:
             # json.dump(data, outfile)
             outfile.write(json.dumps(data, indent=2, sort_keys=True))
 

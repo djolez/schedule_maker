@@ -21,13 +21,12 @@ angular.module('scheduleMakerApp')
       },
     });
 
-    $scope.models = {'selected': null};
-    $scope.selected = {};
-    $scope.selectedKuvarice = [];
-    $scope.selectedKonobari = [];
+    // $scope.selected = {};
+    $scope.selectedKuvarica = null;
+    $scope.selectedKonobar = null;
+    $scope.selectedRadnik = null;
     $scope.radnikEdit = null;
     $scope.radnikDragging = null;
-    $scope.neradniDani = [];
 
     var kuvarice = [{'ime': 'Milena', 'boja': '#F07B19', 'type': 'kuvarica'},
                     {'ime': 'Jelena', 'boja': '#B4C60B', 'type': 'kuvarica'},
@@ -62,14 +61,57 @@ angular.module('scheduleMakerApp')
       return arrDays;
     }
 
-    $scope.osveziModel = function(izabraniMesec) {
-      console.log('Osvezi ' + moment(izabraniMesec));
+    // $scope.osveziModel = function(izabraniMesec) {
+    //
+    //   var daniUmesecu = getDaysArrayByDate(izabraniMesec);
+    //   $scope.raspored.dani = [];
+    //
+    //   daniUmesecu.forEach(function(dan) {
+    //     $scope.raspored.dani.push({
+    //       'ime': dan,
+    //       'nedelja': dan.includes('Ned'),
+    //       'radnici': {
+    //         'kuvarice': {
+    //           'smene': [[], [], []],
+    //           'disabled': false
+    //         },
+    //         'konobari': {
+    //           'smene': [[], [], []],
+    //           'disabled': false
+    //         }
+    //       }
+    //     });
+    //   });
+    // }
 
-      var daniUmesecu = getDaysArrayByDate(izabraniMesec);
-      $scope.raspored.dani = [];
+    function napraviModel(model) {
+      var id = 1;
+
+      konobari.forEach(function(k, i) {
+        k.id = id;
+        k.neradniDani = [];
+        k.ukupnoDana = 0;
+        model.radnici.konobari.push(k);
+
+        // $scope.model.radnici.konobari.push({'id': id, 'ime': k.ime, 'boja': k.boja, 'neradniDani': [], 'ukupnoDana': 0, neradniDani: []});
+        id++;
+      });
+
+      kuvarice.forEach(function(k, i) {
+        k.id = id;
+        k.neradniDani = [];
+        k.ukupnoDana = 0;
+        model.radnici.kuvarice.push(k);
+
+        id++;
+      });
+
+      model.mesec.momentModel = moment(model.mesec.ime);
+
+      var daniUmesecu = getDaysArrayByDate(model.mesec.momentModel);
 
       daniUmesecu.forEach(function(dan) {
-        $scope.raspored.dani.push({
+        model.mesec.dani.push({
           'ime': dan,
           'nedelja': dan.includes('Ned'),
           'radnici': {
@@ -84,35 +126,57 @@ angular.module('scheduleMakerApp')
           }
         });
       });
+
+
+      // var thisMonth = moment();
+      // var currentDate = angular.copy(thisMonth);
+      // var allMonths = [];
+      //
+      // // U dropdownu se prikazuje ukupno 12 meseci, 10 pre trenutnog, trenutni i sledeci
+      // for(var i = 0; i < 11; i++) {
+      //   currentDate = currentDate.startOf('month').subtract(1, 'days').startOf('month');
+      //   allMonths.push(angular.copy(currentDate));
+      // }
+      //
+      // allMonths.unshift(angular.copy(thisMonth.startOf('month')));
+      // allMonths.unshift(angular.copy(thisMonth.endOf('month').add(1, 'days')));
+      //
+      // $scope.raspored.meseci = [];
+
+      // allMonths.forEach(function(month){
+      //   var monthModel = {'dani': [], 'ime': moment(month).format('MMMM-YYYY'), 'momentModel': month};
+      //
+      //   var daniUmesecu = getDaysArrayByDate(month);
+      //
+      //   daniUmesecu.forEach(function(dan) {
+      //     monthModel.dani.push({
+      //       'ime': dan,
+      //       'nedelja': dan.includes('Ned'),
+      //       'radnici': {
+      //         'kuvarice': {
+      //           'smene': [[], [], []],
+      //           'disabled': false
+      //         },
+      //         'konobari': {
+      //           'smene': [[], [], []],
+      //           'disabled': false
+      //         }
+      //       }
+      //     });
+      //   });
+      //
+      //   $scope.raspored.meseci.push(angular.copy(monthModel));
+      // });
+      // console.log($scope.raspored);
+      //
+      // $scope.model.mesec = $scope.raspored.meseci[0];
+      // $scope.selectedMesec = $scope.raspored.meseci[0];
+
     }
 
-    function napraviModel() {
-      $scope.radnici = {'konobari': [], 'kuvarice': []}
-      var id = 1;
+    // $scope.raspored = {};
 
-      konobari.forEach(function(k, i) {
-        k.id = id;
-        k.neradniDani = [];
-        k.ukupnoDana = 0;
-        $scope.radnici.konobari.push(k);
-
-        // $scope.radnici.konobari.push({'id': id, 'ime': k.ime, 'boja': k.boja, 'neradniDani': [], 'ukupnoDana': 0, neradniDani: []});
-        id++;
-      });
-
-      kuvarice.forEach(function(k, i) {
-        k.id = id;
-        k.neradniDani = [];
-        k.ukupnoDana = 0;
-        $scope.radnici.kuvarice.push(k);
-
-        // $scope.radnici.kuvarice.push({'id': id, 'ime': k.ime, 'boja': k.boja, 'neradniDani': [], 'ukupnoDana': 0});
-        id++;
-      });
-
-      // var nextMonth = moment().endOf('month').add(1, "days");
-      // var daniUmesecu = getDaysArrayByDate(nextMonth);
-
+    function initMeseci() {
       var thisMonth = moment();
       var currentDate = angular.copy(thisMonth);
       var allMonths = [];
@@ -126,67 +190,101 @@ angular.module('scheduleMakerApp')
       allMonths.unshift(angular.copy(thisMonth.startOf('month')));
       allMonths.unshift(angular.copy(thisMonth.endOf('month').add(1, 'days')));
 
-      $scope.raspored.meseci = [];
+      $scope.availableMonths = []
 
       allMonths.forEach(function(month){
-        var monthModel = {'dani': [], 'ime': moment(month).format('MMMM-YYYY'), 'momentModel': month};
-
-        var daniUmesecu = getDaysArrayByDate(month);
-
-        daniUmesecu.forEach(function(dan) {
-          monthModel.dani.push({
-            'ime': dan,
-            'nedelja': dan.includes('Ned'),
-            'radnici': {
-              'kuvarice': {
-                'smene': [[], [], []],
-                'disabled': false
-              },
-              'konobari': {
-                'smene': [[], [], []],
-                'disabled': false
-              }
-            }
-          });
-        });
-
-        $scope.raspored.meseci.push(angular.copy(monthModel));
+        $scope.availableMonths.push(moment(month).format('MMMM-YYYY'));
       });
-      console.log($scope.raspored);
 
-      $scope.aktivniMesec = $scope.raspored.meseci[0];
+      $scope.selectedMesec = $scope.availableMonths[0];
 
-      // $scope.raspored = {'meseci': allMonths, 'izabraniMesec': allMonths[0], 'dani': []};
+      // $scope.raspored.meseci = [];
+
+      // allMonths.forEach(function(month){
+      //   var monthModel = {'dani': [], 'ime': moment(month).format('MMMM-YYYY'), 'momentModel': month};
       //
-      // $scope.osveziModel($scope.raspored.izabraniMesec);
+      //   var daniUmesecu = getDaysArrayByDate(month);
+      //
+      //   daniUmesecu.forEach(function(dan) {
+      //     monthModel.dani.push({
+      //       'ime': dan,
+      //       'nedelja': dan.includes('Ned'),
+      //       'radnici': {
+      //         'kuvarice': {
+      //           'smene': [[], [], []],
+      //           'disabled': false
+      //         },
+      //         'konobari': {
+      //           'smene': [[], [], []],
+      //           'disabled': false
+      //         }
+      //       }
+      //     });
+      //   });
+      //
+      //   $scope.raspored.meseci.push(angular.copy(monthModel));
+      // });
+      // $scope.selectedMesec = $scope.raspored.meseci[0];
     }
 
-    $scope.raspored = {};
+    var emptyModel = {
+      'mesec': {
+        'dani': [],
+        'ime': '',
+        'momentModel': ''
+      },
+      'radnici': {
+        'kuvarice': [],
+        'konobari': []
+      }
+    }
 
-    $http.get("http://localhost:5000/model")
-      .then(function (response) {
-          console.log('receive response', response);
-          if(Object.entries(response.data).length === 0 && response.data.constructor === Object) {
-            console.log('Model empty, need to initialize');
-            napraviModel();
-          } else {
-            console.log('Received model from server');
+    function resetAll() {
+      $scope.selectedKuvarica = null;
+      $scope.selectedKonobar = null;
+      $scope.selectedRadnik = null;
+      $scope.resetNeradniDani();
+    }
 
-            response.data.aktivniMesec.momentModel = moment(response.data.aktivniMesec.momentModel);
-            $scope.aktivniMesec = response.data.aktivniMesec;
-            $scope.radnici = response.data.radnici;
-          }
+    $scope.resetAllTableFields = function() {
+      resetAll();
+    }
 
-          return response;
-      }, function (response) {
-          return response;
-      });
+    $scope.getModel = function(month){
+      console.log('getModel: ' + month);
 
+      $http.get("http://localhost:5000/model", {'params': {'month': month}})
+        .then(function (response) {
+            console.log('getModel receive response', response);
+            resetAll();
+
+            if(Object.entries(response.data).length === 0 && response.data.constructor === Object) {
+              console.log('Model empty, need to initialize');
+              $scope.model = angular.copy(emptyModel)
+              $scope.model.mesec.ime = month;
+              napraviModel($scope.model);
+            } else {
+              console.log('Received model from server');
+
+              response.data.model.mesec.momentModel = moment(response.data.model.mesec.momentModel);
+              $scope.model = response.data.model;
+              // $scope.model.radnici = response.data.radnici;
+            }
+
+            return response;
+        }, function (response) {
+            return response;
+        });
+    }
+
+    initMeseci();
+    $scope.getModel($scope.selectedMesec);
 
     $scope.sacuvajModel = function() {
-      console.log('cuvam');
+      console.log("Saving model: ", $scope.model);
+      resetAll();
 
-      $http.post("http://localhost:5000/model", {'aktivniMesec': $scope.aktivniMesec, 'radnici': $scope.radnici}, {headers: {'Content-Type': 'application/json'} })
+      $http.post("http://localhost:5000/model", {'model': $scope.model}, {headers: {'Content-Type': 'application/json'} })
         .then(function (response) {
             $scope.savedModel = true;
             $timeout(function() {
@@ -197,11 +295,23 @@ angular.module('scheduleMakerApp')
         }, function (response) {
             return response;
         });
+
+      // $http.post("http://localhost:5000/model", {'aktivniMesec': $scope.model.mesec, 'radnici': $scope.model.radnici}, {headers: {'Content-Type': 'application/json'} })
+      //   .then(function (response) {
+      //       $scope.savedModel = true;
+      //       $timeout(function() {
+      //         $scope.savedModel = false;
+      //       }, 2000);
+      //
+      //       return response;
+      //   }, function (response) {
+      //       return response;
+      //   });
     };
 
-    $interval(function() {
-      $scope.sacuvajModel();
-    }, 60000);
+    // $interval(function() {
+    //   $scope.sacuvajModel();
+    // }, 60000);
 
     // if($scope.raspored === {} || !$scope.raspored)
     //   napraviModel();
@@ -210,7 +320,14 @@ angular.module('scheduleMakerApp')
       return date.format('MMMM YYYY');
     };
 
-    $scope.smenaDrop = function(radnik, smena) {
+    $scope.smenaDrop = function(radnikID, smena, isDayDisabled) {
+      if(isDayDisabled) {
+        resetAll();
+        return false;
+      }
+
+      var radnik = nadjiRadnikaPoID(radnikID);
+
       var isContained = false;
 
       smena.forEach(function(r) {
@@ -228,6 +345,33 @@ angular.module('scheduleMakerApp')
       return false;
     };
 
+
+    $scope.dodajUSmenu = function(radnik, smena, acceptedType) {
+
+      if(!radnik) {
+        console.log("Radnik empty");
+        return;
+      }
+      
+      // Mora zboh apdejta neradnih dana, ukoliko su u medjuvremenu promenjeni
+      radnik = nadjiRadnikaPoID(radnik.id);
+
+      if(radnik.type !== acceptedType)
+        return;
+
+      var contains = false;
+      smena.forEach(function(r){
+        if(r.id === radnik.id)
+          contains = true;
+      });
+
+      if(!contains) {
+        // smena.push(angular.copy(radnik));
+        smena.push(radnik);
+        $scope.uvecajDane(radnik.id);
+      }
+    };
+
     // $scope.radnikDragStart = function() {
     //   console.log("dragging");
     // };
@@ -235,20 +379,23 @@ angular.module('scheduleMakerApp')
     $scope.neradniDani = [];
 
     $scope.disableNeradniDani = function(radnik) {
-      console.log("disable", radnik);
+      console.log("disableNeradniDani", radnik);
+
+      if(radnik === null || !radnik.neradniDani)
+        return;
 
       radnik.neradniDani.forEach(function(dan) {
         // $scope.raspored.dani[moment(dan).date()-1].disabled = true;
         var smeneArray = [];
 
         if(radnik.type === 'kuvarica') {
-          $scope.aktivniMesec.dani[moment(dan).date()-1].radnici.kuvarice.disabled = true;
-          $scope.neradniDani.push($scope.aktivniMesec.dani[moment(dan).date()-1].radnici.kuvarice);
+          $scope.model.mesec.dani[moment(dan).date()-1].radnici.kuvarice.disabled = true;
+          $scope.neradniDani.push($scope.model.mesec.dani[moment(dan).date()-1].radnici.kuvarice);
         }
           // smeneArray = $scope.raspored.dani[moment(dan).date()-1].radnici.kuvarice;
         else if(radnik.type === 'konobar') {
-          $scope.aktivniMesec.dani[moment(dan).date()-1].radnici.konobari.disabled = true;
-          $scope.neradniDani.push($scope.aktivniMesec.dani[moment(dan).date()-1].radnici.konobari);
+          $scope.model.mesec.dani[moment(dan).date()-1].radnici.konobari.disabled = true;
+          $scope.neradniDani.push($scope.model.mesec.dani[moment(dan).date()-1].radnici.konobari);
         }
           // smeneArray = $scope.raspored.dani[moment(dan).date()-1].radnici.konobari;
 
@@ -266,6 +413,7 @@ angular.module('scheduleMakerApp')
     };
 
     $scope.radnikDragStart = function(radnik) {
+      resetAll();
       $scope.radnikDragging = radnik.type;
       $scope.disableNeradniDani(radnik);
     };
@@ -286,37 +434,7 @@ angular.module('scheduleMakerApp')
         return false;
     }
 
-    $scope.dodajUSmenu = function(radnici, smena, acceptedType) {
-      console.log(radnici, smena, acceptedType);
-      // Proveri da li je objekat sa selektovanim radnicima prazan
-      if(Object.keys(radnici).length === 0 && radnici.constructor === Object) {
-        console.log("Radnici empty");
-        return;
-      }
 
-      for (var id in radnici) {
-        if (radnici.hasOwnProperty(id)) {
-          if(radnici[id].type !== acceptedType)
-            continue;
-
-          var contains = false;
-          smena.forEach(function(r){
-            if(r.id === parseInt(id))
-              contains = true;
-          });
-
-          if(!contains) {
-            smena.push(angular.copy(radnici[id]));
-            $scope.uvecajDane(parseInt(id));
-          }
-
-          // if(!containsObject(radnici[id], smena)) {
-          //   smena.push(angular.copy(radnici[id]));
-          //   $scope.uvecajDane(parseInt(id));
-          // }
-        }
-      }
-    };
 
     $scope.izbrisiIzSmene = function(radnik, smena, radnikIndex) {
       $scope.smanjiDane(radnik.id);
@@ -324,16 +442,15 @@ angular.module('scheduleMakerApp')
     };
 
     function nadjiRadnikaPoID(id) {
-      console.log('nadjiRadnikaPoID: ' + id);
       var res = null;
 
-      $scope.radnici.konobari.forEach(function(r){
+      $scope.model.radnici.konobari.forEach(function(r){
         if(r.id === id)
           res = r;
       });
 
       if(!res) {
-        $scope.radnici.kuvarice.forEach(function(r){
+        $scope.model.radnici.kuvarice.forEach(function(r){
           if(r.id === id)
             res = r;
         });
@@ -373,7 +490,7 @@ angular.module('scheduleMakerApp')
     }, true);
 
     $scope.popuniModel = function() {
-      $scope.raspored.dani.forEach(function(d) {
+      $scope.model.mesec.dani.forEach(function(d) {
         d.radnici.kuvarice.smene[0].push(angular.copy(kuvarice[0]));
         d.radnici.kuvarice.smene[1].push(angular.copy(kuvarice[1]));
         d.radnici.kuvarice.smene[1].push(angular.copy(kuvarice[2]));
@@ -388,6 +505,24 @@ angular.module('scheduleMakerApp')
       });
 
     };
+
+    // window.onbeforeunload = function (event) {
+    //   var message = 'Sure you want to leave?';
+    //   if (typeof event == 'undefined') {
+    //     event = window.event;
+    //   }
+    //   if (event) {
+    //     event.returnValue = message;
+    //   }
+    //   return message;
+    // }
+
+    // $scope.$on('$stateChangeStart', function( event ) {
+    //     var answer = confirm("Are you sure you want to leave this page?")
+    //     if (!answer) {
+    //         event.preventDefault();
+    //     }
+    // });
 
     $scope.printToCart = function(printSectionId) {
       // console.log($scope.raspored);
@@ -438,7 +573,7 @@ angular.module('scheduleMakerApp')
                 '<div class="col-lg-12" style="margin-bottom: 15px;">' +
                   '<h4 style="text-align: center; margin-top: 0; margin-bottom: 10px;">' +
                     // $scope.raspored.izabraniMesec.format('MMMM YYYY') +
-                    $scope.aktivniMesec.momentModel.format('MMMM YYYY') +
+                    $scope.model.mesec.momentModel.format('MMMM YYYY') +
                   '</h4>' +
                   tableContents +
                 '</div>' +

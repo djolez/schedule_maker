@@ -13,13 +13,13 @@
   }
 } */
 
-
 body {
   font-size: 20px;
 }
 
 td.radnici {
   padding: 0;
+  height: 1px;
 }
 
 td.radnici ul {
@@ -30,6 +30,7 @@ td.radnici ul {
     min-width: 50px;
     min-height: 20px;
     z-index: 2;
+    height: 100%;
 }
 
 .radnici tr {
@@ -44,7 +45,8 @@ table.radnici td {
   border-right: 5px solid black !important;
 }
 
-.border-bottom-emphasized {
+.border-nedelja {
+  border-top: 5px solid black;
   border-bottom: 5px solid black;
 }
 
@@ -57,7 +59,7 @@ td.disabled > ul{
 }
 
 td.placeholder > ul {
-  background-color: #FFE5A9;
+  /* background-color: #FFE5A9; */
 }
 
 .raspored-header {
@@ -161,10 +163,6 @@ span.radnik-name {
     padding-top: 0;
     font-weight: normal !important;
   }
-
-    /* .print ul > li > p {
-       font-weight: normal !important;
-     } */
 
   .print table td {
      line-height: 14px !important;

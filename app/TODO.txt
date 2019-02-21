@@ -34,17 +34,21 @@ doda npr neki praznik(sto povecava prvu kolonu) vraca se na normalu.
 
 Reorder unutar polja dragdrop
 
-Samo jedan selektovan
+// Samo jedan selektovan
 
 Da moze da se salje samo do odredjene nedelje raspored
 
-Nedelja da bude i odozgo uokvirena
+// Nedelja da bude i odozgo uokvirena
 
-Deselektuj sve na save
+// Deselektuj sve na save
 
 Insert ne radi na malu visinu polja
 
 Drugacija boja dana u kalendaru za bolovanje i godisnji odmor
+
+// Confirm leave za tab ####### Treba da se odkomentarise window.beforeunload
+
+// Kada se npr skine neki radni dan, ta izmena se prikazuje na select radnika, medjutim na drag i dalje ostaju stari neradni dani
 
 #######################################################################################################
 
