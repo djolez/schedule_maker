@@ -14,9 +14,9 @@
         <option ng-repeat="mesec in availableMonths" ng-value="mesec">{{mesec}}</option>
       </select>
 
-      <button ng-click="printToCart('printSectionId')" class="button" style="margin-left: 20px;">Print <i class="fas fa-print" ></i></button>
-      <button type="button" ng-click="popuniModel()">Popuni</button>
-      <button type="button" ng-click="sacuvajModel()">Save <i class="fas fa-save" ng-show="!savedModel"></i><i class="fas fa-thumbs-up" ng-show="savedModel"></i></button>
+      <button ng-click="printToCart('printSectionId')" class="button" style="margin-left: 20px;">PRINT <i class="fas fa-print"></i></button>
+      <button type="button" ng-click="popuniModel()">POPUNI</button>
+      <button type="button" ng-click="sacuvajModel()" ng-class="formDirty ? 'bg-red' : 'bg-green'">SAVE <i class="fas fa-save" ng-show="!savedModel"></i><i class="fas fa-thumbs-up" ng-show="savedModel"></i></button>
 
     </h2>
 

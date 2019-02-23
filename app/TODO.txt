@@ -42,7 +42,7 @@ Da moze da se salje samo do odredjene nedelje raspored
 
 // Deselektuj sve na save
 
-Insert ne radi na malu visinu polja
+//Insert ne radi na malu visinu polja
 
 Drugacija boja dana u kalendaru za bolovanje i godisnji odmor
 
