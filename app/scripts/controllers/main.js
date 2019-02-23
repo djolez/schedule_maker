@@ -253,7 +253,6 @@ angular.module('scheduleMakerApp')
       resetAll();
     }
 
-
     $scope.removePrintDays = function(lastIndex) {
       if(!$scope.model) {
         return;
@@ -264,7 +263,6 @@ angular.module('scheduleMakerApp')
       }
       $scope.printDaysSet = false;
     };
-
 
     function getModelCall(month) {
       $http.get("http://localhost:5000/model", {'params': {'month': month}})
@@ -303,6 +301,7 @@ angular.module('scheduleMakerApp')
         }, 500);
         return;
       }
+
       $scope.removePrintDays();
 
       getModelCall(month);
