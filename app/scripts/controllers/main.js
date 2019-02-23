@@ -15,7 +15,7 @@ angular.module('scheduleMakerApp')
       'Karma'
     ];
 
-    var PRODUCTION = true;
+    var PRODUCTION = false;
     var AUTO_SAVE_INTERVAL = 60000;
 
     moment.updateLocale('sr', {
