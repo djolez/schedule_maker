@@ -38,6 +38,10 @@ def model():
 
     return 'Hello, World!'
 
+@app.route('/snip', methods=['GET'])
+def snip():
+    os.system('flameshot gui')
+    return 'OK'
 
 if __name__ == '__main__':
     app.jinja_env.auto_reload = True

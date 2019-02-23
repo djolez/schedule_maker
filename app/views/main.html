@@ -14,9 +14,10 @@
         <option ng-repeat="mesec in availableMonths" ng-value="mesec">{{mesec}}</option>
       </select>
 
-      <button ng-click="printToCart('printSectionId')" class="button" style="margin-left: 20px;">Print <i class="fas fa-print" ></i></button>
-      <button type="button" ng-click="popuniModel()">Popuni</button>
-      <button type="button" ng-click="sacuvajModel()">Save <i class="fas fa-save" ng-show="!savedModel"></i><i class="fas fa-thumbs-up" ng-show="savedModel"></i></button>
+      <button ng-click="printToCart('printSectionId')" class="button" style="margin-left: 20px;">PRINT <i class="fas fa-print"></i></button>
+      <button type="button" ng-click="popuniModel()" ng-if="!PRODUCTION">POPUNI</button>
+      <button type="button" ng-click="removePrintDays()" ng-show="printDaysSet">SKLONI DANE <i class="fas fa-times"></i></button>
+      <button type="button" ng-click="sacuvajModel()" ng-class="formDirty ? 'bg-red' : 'bg-green'">SAVE <i class="fas fa-save" ng-show="!savedModel"></i><i class="fas fa-thumbs-up" ng-show="savedModel"></i></button>
 
     </h2>
 
@@ -86,15 +87,19 @@
         </tr>
 
         <!-- <tr ng-repeat="dan in raspored.dani" ng-class="{'border-bottom-emphasized': dan.nedelja, 'disabled': dan.disabled}"> -->
-        <tr ng-repeat="dan in model.mesec.dani" ng-class="{'border-nedelja': dan.nedelja, 'disabled': dan.disabled}">
+        <tr ng-repeat="dan in model.mesec.dani" ng-class="{'border-nedelja': dan.nedelja, 'disabled': dan.disabled, 'print-show': printDaysSet && !dan.hidePrint, 'print-ignore': dan.hidePrint}">
 
           <td ng-style="{
                 'font-weight': dan.nedelja ? 'bold' : 'normal',
                 'color': !dan.edit && dan.komentar ? 'red' : ''}"
               ng-dblclick="dan.edit = true;"
+              ng-mouseover="dan.hover=true;"
+              ng-mouseleave="dan.hover=false;"
               class="border-right-emphasized raspored-dan">{{ dan.ime }}
                 <span ng-if="dan.edit"><input ng-model="dan.komentar"/> <i class="fas fa-save" ng-click="dan.edit=false;" style="cursor: pointer; font-size: 30px"></i></span>
                 <span ng-show="!dan.edit && dan.komentar;"> - {{dan.komentar}}</span>
+
+                <i class="fas fa-print"  style="cursor: pointer; float: right; margin-top: 10px; font-size: 20px; color: black !important;" ng-if="!dan.edit && dan.hover" ng-click="markForPrint($index)"></i>
           </td>
 
           <!-- <grupa-radnika list="dan.radnici.kuvarice" type="'kuvarice'" smena-dodaj="dodajUSmenu" drag-start="radnikDragStart" dragging="radnikDragging" moved="radnikMoved" smena-drop="smenaDrop" selected="selectedKuvarica"></grupa-radnika> -->

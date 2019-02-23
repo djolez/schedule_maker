@@ -4,6 +4,9 @@
 /.sass-cache
 /bower_components
 
+/server/models/
+.~lock*
+
 #ANGULAR
 .DS_STORE
 

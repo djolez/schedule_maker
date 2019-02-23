@@ -17,6 +17,11 @@ body {
   font-size: 20px;
 }
 
+table tr {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 td.radnici {
   padding: 0;
   height: 1px;
@@ -122,6 +127,17 @@ span.radnik-name {
   background-color: #f2baba !important;
 }
 
+.bg-red {
+  background-color: red;
+}
+
+.bg-green {
+  background-color: #07ff07;
+}
+
+.print-show {
+  background-color: #ffffa6 !important;
+}
 
 @media print {
   .col-lg-6 {
@@ -131,6 +147,10 @@ span.radnik-name {
     min-height: 1px;
     padding-right: 15px;
     padding-left: 0;
+  }
+
+  .print-ignore {
+    display: none;
   }
 
   .print table {
