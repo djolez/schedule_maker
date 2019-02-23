@@ -50,6 +50,8 @@ Drugacija boja dana u kalendaru za bolovanje i godisnji odmor
 
 // Kada se npr skine neki radni dan, ta izmena se prikazuje na select radnika, medjutim na drag i dalje ostaju stari neradni dani
 
+Proveriti da li radi menjanje meseca i onda unosenje neradnih dana
+
 #######################################################################################################
 
 
