@@ -30,18 +30,6 @@ angular.module('scheduleMakerApp')
             $scope.neradniDani = radnik.neradniDani;
           };
 
-          // function disableDaysFromSelected() {
-          //   // Disejbluj sve dane koji su u preseku neradnih dana selektovanih radnika
-          //   for (var id in $scope.selected) {
-          //       if ($scope.selected.hasOwnProperty(id)) {
-          //           $scope.disableNeradniDani($scope.selected[id]);
-          //
-          //           // $scope.selected[id].neradniDani.forEach(function(dan) {
-          //           //   $scope.raspored.dani[moment(dan).day()-2].disabled = true;
-          //           // });
-          //       }
-          //   }
-          // }
 
           $scope.closeRadnikEdit = function() {
             $scope.radnikEdit = null;

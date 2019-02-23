@@ -533,10 +533,7 @@ angular.module('scheduleMakerApp')
     // }
 
     $scope.$watch('neradniDani', function(newValue, oldValue){
-        if(newValue){
-            console.log('my array changed, new size : ' + newValue.length);
-            console.log($scope.radnikEdit);
-
+        if(newValue) {
             if($scope.radnikEdit)
               $scope.radnikEdit.neradniDani = newValue;
         }
