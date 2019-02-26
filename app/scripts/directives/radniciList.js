@@ -22,7 +22,7 @@ angular.module('scheduleMakerApp')
 
             if(radnik.neradniDani && radnik.neradniDani.length > 0) {
               for(var i = 0; i < radnik.neradniDani.length; i++) {
-                radnik.neradniDani[i] = moment(radnik.neradniDani[i]);
+                radnik.neradniDani[i].moment = moment(radnik.neradniDani[i].moment);
               }
             }
 
@@ -30,6 +30,22 @@ angular.module('scheduleMakerApp')
             $scope.neradniDani = radnik.neradniDani;
           };
 
+          $scope.neradniDani = [];
+          var neradniDanEnum = Object.freeze({SLOBODAN: 'slobodan-dan', BOLOVANJE: 'bolovanje', GODISNJI: 'godisnji-odmor'});
+          $scope.neradniDanTypeModel = neradniDanEnum.SLOBODAN;
+
+          $scope.$watch('neradniDani', function(newValue, oldValue){
+              if(newValue) {
+                  if($scope.radnikEdit)
+                    $scope.radnikEdit.neradniDani = angular.copy(newValue);
+                    console.log('!!!!!!!!!!!!!!', newValue);
+              }
+          }, true);
+
+          $scope.dayClick = function(e, day) {
+            // console.log("###########################", day);
+            day.mdp.dayType = $scope.neradniDanTypeModel;
+          };
 
           $scope.closeRadnikEdit = function() {
             $scope.radnikEdit = null;

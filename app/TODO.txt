@@ -46,6 +46,8 @@ Da moze da se salje samo do odredjene nedelje raspored
 
 Drugacija boja dana u kalendaru za bolovanje i godisnji odmor
 
+  scope.getDayClasses
+
 // Confirm leave za tab ####### Treba da se odkomentarise window.beforeunload
 
 // Kada se npr skine neki radni dan, ta izmena se prikazuje na select radnika, medjutim na drag i dalje ostaju stari neradni dani
