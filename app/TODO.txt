@@ -36,7 +36,7 @@ Reorder unutar polja dragdrop
 
 // Samo jedan selektovan
 
-Da moze da se salje samo do odredjene nedelje raspored
+// Da moze da se salje samo do odredjene nedelje raspored
 
 // Nedelja da bude i odozgo uokvirena
 
@@ -44,15 +44,15 @@ Da moze da se salje samo do odredjene nedelje raspored
 
 //Insert ne radi na malu visinu polja
 
-Drugacija boja dana u kalendaru za bolovanje i godisnji odmor
+// Drugacija boja dana u kalendaru za bolovanje i godisnji odmor
 
-  scope.getDayClasses
-
-// Confirm leave za tab ####### Treba da se odkomentarise window.beforeunload
+// Confirm leave za tab
 
 // Kada se npr skine neki radni dan, ta izmena se prikazuje na select radnika, medjutim na drag i dalje ostaju stari neradni dani
 
 Proveriti da li radi menjanje meseca i onda unosenje neradnih dana
+
+formDirty da se aktivira i kada se menja radnik
 
 #######################################################################################################
 
