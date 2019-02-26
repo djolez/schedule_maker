@@ -44,9 +44,23 @@
   <div class="no-print" ng-show="radnikEdit !== null;">
     <h4 style="color: red; text-align: center; cursor: pointer;" ng-click="closeRadnikEdit()">ZATVORI&nbsp;<i class="fas fa-times" ></i></h4>
 
-    
+    <div class="btn-group">
+      <label class="btn btn-info" ng-model="neradniDanTypeModel" uib-btn-radio="'slobodan-dan'">SL. DAN</label>
+      <label class="btn btn-warning" ng-model="neradniDanTypeModel" uib-btn-radio="'godisnji-odmor'">GOD. ODMOR</label>
+      <label class="btn btn-danger" ng-model="neradniDanTypeModel" uib-btn-radio="'bolovanje'">BOLOVANJE</label>
+    </div>
 
-    <multiple-date-picker ng-model="neradniDani" month="currentMonth" disable-navigation="true"></multiple-date-picker>
+    <!-- <div class="btn-group">
+      <label class="btn-xs btn-primary" ng-model="neradniDanTypeModel" style="background-color: #ff5a5a !important;" uib-btn-radio="0">Slobodan dan</label>
+      <label class="btn-xs btn-primary" ng-model="neradniDanTypeModel" style="background-color: #7c7cff !important;" uib-btn-radio="1">Bolovanje</label>
+      <label class="btn-xs btn-primary" ng-model="neradniDanTypeModel" style="background-color: #6ae21e !important;" uib-btn-radio="2">Godisnji odmor</label>
+    </div> -->
+
+    <!-- <input ng-model="neradniDanTypeModel" value="0" type="radio" name="Slobodan dan">
+    <input ng-model="neradniDanTypeModel" value="1" type="radio" name="Bolovanje">
+    <input ng-model="neradniDanTypeModel" value="2" type="radio" name="Godisnji odmor"> -->
+
+    <multiple-date-picker ng-model="neradniDani" day-click="dayClick" month="currentMonth" disable-navigation="true"></multiple-date-picker>
   </div>
 
 </div>

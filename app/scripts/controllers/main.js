@@ -315,9 +315,12 @@ angular.module('scheduleMakerApp')
         return;
       }
 
-      console.log("Saving model: ", $scope.model);
+      console.log("Saving model 1: ", $scope.model.radnici.kuvarice[0]);
+
       resetAll();
       $scope.removePrintDays();
+
+      console.log("Saving model 2: ", $scope.model.radnici.kuvarice[0]);
 
       $http.post("http://localhost:5000/model", {'model': $scope.model}, {headers: {'Content-Type': 'application/json'} })
         .then(function (response) {
@@ -440,13 +443,13 @@ angular.module('scheduleMakerApp')
         var smeneArray = [];
 
         if(radnik.type === 'kuvarica') {
-          $scope.model.mesec.dani[moment(dan).date()-1].radnici.kuvarice.disabled = true;
-          $scope.neradniDani.push($scope.model.mesec.dani[moment(dan).date()-1].radnici.kuvarice);
+          $scope.model.mesec.dani[moment(dan.moment).date()-1].radnici.kuvarice.disabledType = dan.dayType;
+          $scope.neradniDani.push($scope.model.mesec.dani[moment(dan.moment).date()-1].radnici.kuvarice);
         }
           // smeneArray = $scope.raspored.dani[moment(dan).date()-1].radnici.kuvarice;
         else if(radnik.type === 'konobar') {
-          $scope.model.mesec.dani[moment(dan).date()-1].radnici.konobari.disabled = true;
-          $scope.neradniDani.push($scope.model.mesec.dani[moment(dan).date()-1].radnici.konobari);
+          $scope.model.mesec.dani[moment(dan.moment).date()-1].radnici.konobari.disabledType = dan.dayType;
+          $scope.neradniDani.push($scope.model.mesec.dani[moment(dan.moment).date()-1].radnici.konobari);
         }
           // smeneArray = $scope.raspored.dani[moment(dan).date()-1].radnici.konobari;
 
@@ -458,7 +461,7 @@ angular.module('scheduleMakerApp')
 
     $scope.resetNeradniDani = function() {
       $scope.neradniDani.forEach(function(d) {
-        d.disabled = false;
+        d.disabledType = null;
       });
       $scope.neradniDani = [];
     };
@@ -531,13 +534,13 @@ angular.module('scheduleMakerApp')
     //   $scope.radnikEdit = radnik;
     //   $scope.neradniDani = radnik.neradniDani;
     // }
-
-    $scope.$watch('neradniDani', function(newValue, oldValue){
-        if(newValue) {
-            if($scope.radnikEdit)
-              $scope.radnikEdit.neradniDani = newValue;
-        }
-    }, true);
+    //
+    // $scope.$watch('neradniDani', function(newValue, oldValue){
+    //     if(newValue) {
+    //         if($scope.radnikEdit)
+    //           $scope.radnikEdit.neradniDani = newValue;
+    //     }
+    // }, true);
 
     $scope.popuniModel = function() {
       $scope.model.mesec.dani.forEach(function(d) {

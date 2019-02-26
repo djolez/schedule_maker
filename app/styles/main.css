@@ -139,6 +139,44 @@ span.radnik-name {
   background-color: #ffffa6 !important;
 }
 
+/* CUSTOM DATEPICKER */
+.btn.active {
+  font-weight: bold !important;
+}
+
+.picker-day.picker-selected.slobodan-dan {
+    background-color: #31b0d5 !important;
+    color: #fff;
+}
+
+td.disabled-slobodan-dan {
+  background-color: #31b0d533 !important;
+}
+
+.picker-day.picker-selected.godisnji-odmor {
+    background-color: #f0ad4e !important;
+    color: #fff;
+}
+
+td.disabled-godisnji-odmor {
+  background-color: #f0ad4e8c !important;
+}
+
+.picker-day.picker-selected.bolovanje {
+    background-color: #d9534f !important;
+    color: #fff;
+}
+
+td.disabled-bolovanje {
+  background-color: #d9534f63 !important;
+}
+
+.picker-day:hover{
+    cursor: pointer;
+    background-color: #FFFD96 !important;
+    color: black !important;
+}
+
 @media print {
   .col-lg-6 {
     width: 50%;

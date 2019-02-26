@@ -104,9 +104,9 @@
 
           <!-- <grupa-radnika list="dan.radnici.kuvarice" type="'kuvarice'" smena-dodaj="dodajUSmenu" drag-start="radnikDragStart" dragging="radnikDragging" moved="radnikMoved" smena-drop="smenaDrop" selected="selectedKuvarica"></grupa-radnika> -->
 
-          <td class="radnici" ng-repeat="smena in dan.radnici.kuvarice.smene track by $index" ng-click="!dan.radnici.kuvarice.disabled && dodajUSmenu(selectedRadnik, smena, 'kuvarica');" ng-class="{'border-right-emphasized': $last, 'disabled': dan.radnici.kuvarice.disabled, 'placeholder': radnikDragging === 'kuvarica'}">
+          <td class="radnici" ng-repeat="smena in dan.radnici.kuvarice.smene track by $index" ng-click="!dan.radnici.kuvarice.disabledType && dodajUSmenu(selectedRadnik, smena, 'kuvarica');" ng-class="{'border-right-emphasized': $last, 'disabled-slobodan-dan': dan.radnici.kuvarice.disabledType === 'slobodan-dan', 'disabled-bolovanje': dan.radnici.kuvarice.disabledType === 'bolovanje', 'disabled-godisnji-odmor': dan.radnici.kuvarice.disabledType === 'godisnji-odmor', 'placeholder': radnikDragging === 'kuvarica'}">
             <ul dnd-list
-                dnd-drop="smenaDrop(item.id, smena, dan.radnici.kuvarice.disabled)"
+                dnd-drop="smenaDrop(item.id, smena, dan.radnici.kuvarice.disabledType)"
                 dnd-allowed-types="['kuvarice']"
                 dnd-horizontal-list="true"
                 class="list-inline">
@@ -128,9 +128,9 @@
             </ul>
           </td>
 
-          <td class="radnici" ng-repeat="smena in dan.radnici.konobari.smene track by $index" ng-style="{'border-right': $last ? '3px solid black' : ''}" ng-click="!dan.radnici.konobari.disabled && dodajUSmenu(selectedRadnik, smena, 'konobar');" ng-class="{'disabled': dan.radnici.konobari.disabled, 'placeholder': radnikDragging === 'konobar'}">
+          <td class="radnici" ng-repeat="smena in dan.radnici.konobari.smene track by $index" ng-style="{'border-right': $last ? '3px solid black' : ''}" ng-click="!dan.radnici.konobari.disabledType && dodajUSmenu(selectedRadnik, smena, 'konobar');" ng-class="{'disabled-slobodan-dan': dan.radnici.konobari.disabledType === 'slobodan-dan', 'disabled-bolovanje': dan.radnici.konobari.disabledType === 'bolovanje', 'disabled-godisnji-odmor': dan.radnici.konobari.disabledType === 'godisnji-odmor', 'placeholder': radnikDragging === 'konobar'}">
             <ul dnd-list
-                dnd-drop="smenaDrop(item.id, smena, dan.radnici.konobari.disabled)"
+                dnd-drop="smenaDrop(item.id, smena, dan.radnici.konobari.disabledType)"
                 dnd-allowed-types="['konobari']"
                 dnd-horizontal-list="true"
                 class="list-inline">
