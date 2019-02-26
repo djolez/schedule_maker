@@ -317,17 +317,19 @@
                         if (day.selectable && !prevented) {
                             day.mdp.selected = !day.mdp.selected;
                             if (day.mdp.selected) {
-                                scope.ngModel.push(day.date);
+                                var model = {'moment': day.date, 'dayType': day.mdp.dayType};
+                                scope.ngModel.push(model);
                             } else {
                                 var idx = -1;
                                 for (var i = 0; i < scope.ngModel.length; ++i) {
-                                    if (moment.isMoment(scope.ngModel[i])) {
-                                        if (scope.ngModel[i].isSame(day.date, 'day')) {
+                                    if (moment.isMoment(scope.ngModel[i].moment)) {
+                                        if (scope.ngModel[i].moment.isSame(day.date, 'day')) {
                                             idx = i;
                                             break;
                                         }
                                     } else {
-                                        if (scope.ngModel[i].date.isSame(day.date, 'day')) {
+                                      console.log(scope.ngModel[i].moment);
+                                        if (scope.ngModel[i].moment.date.isSame(day.date, 'day')) {
                                             idx = i;
                                             break;
                                         }
@@ -373,6 +375,7 @@
                     };
 
                     scope.getDayClasses = function (day) {
+
                         var css = '';
                         if (day.css && (!day.mdp.otherMonth || scope.showDaysOfSurroundingMonths)) {
                             css += ' ' + day.css;
@@ -398,6 +401,14 @@
                         if (day.mdp.otherMonth) {
                             css += ' picker-other-month';
                         }
+
+                        // CUSTOM FUNCTIONALITY
+                        // if(day.mdp.dayType) {
+                        //   css += ' ' + day.mdp.dayType;
+                        //
+                        //   console.log("~~~~~~~~~~~~~~", css);
+                        // }
+                        css += ' ' + day.mdp.dayType;
                         return css;
                     };
 
@@ -467,12 +478,28 @@
                     /*Check if the date is selected*/
                     scope.isSelected = function (day) {
                         return scope.ngModel.some(function (d) {
-                            return day.date.isSame(d, 'day');
+                            return day.date.isSame(d.moment, 'day');
                         });
                     };
 
+                    function getDayType(day) {
+                      var result;
+
+                      scope.ngModel.some(function (d) {
+                        if(day.date.isSame(d.moment, 'day')) {
+                            result = d.dayType;
+                            return;
+                        }
+                      });
+                      return result;
+                    }
+
                     /*Generate the calendar*/
                     scope.generate = function () {
+                        var oldMonth = angular.copy(scope.monthToDisplay);
+                        var oldYear = angular.copy(scope.yearToDisplay);
+                        var oldDays = angular.copy(scope.days);
+
                         scope.monthsForSelect = moment.months();
                         scope.yearsForSelect = getYearsForSelect();
                         scope.monthToDisplay = getMonthYearToDisplay();
@@ -510,6 +537,8 @@
                                 day.mdp.today = day.date.isSame(now, 'day');
                                 day.mdp.past = day.date.isBefore(now, 'day');
                                 day.mdp.future = day.date.isAfter(now, 'day');
+                                day.mdp.dayType = getDayType(day);
+
                                 if (!day.date.isSame(scope.month, 'month')) {
                                     day.mdp.otherMonth = true;
                                 }
@@ -522,8 +551,18 @@
                             maxDays += (scope.sundayFirstDay ? 6 : 7) - lastDay.day();
                         }
 
+                        var isRedraw = oldMonth === scope.monthToDisplay && oldYear === scope.yearToDisplay;
+                        console.log(isRedraw);
+
+                        var currentIndex = -1;
+
                         for (var j = 0; j < maxDays; j++) {
                             days.push(createDate());
+                            currentIndex = days.length-1;
+
+                            if(isRedraw && oldDays[currentIndex].mdp && oldDays[currentIndex].mdp.dayType) {
+                              days[currentIndex].mdp.dayType = oldDays[currentIndex].mdp.dayType;
+                            }
                         }
 
                         scope.days = days;
