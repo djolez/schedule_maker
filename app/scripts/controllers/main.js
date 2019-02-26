@@ -116,7 +116,7 @@ angular.module('scheduleMakerApp')
       daniUmesecu.forEach(function(dan) {
         model.mesec.dani.push({
           'ime': dan,
-          'nedelja': dan.includes('Ned') || dan.includes('ned'),
+          'nedelja': dan.includes('Ned') || dan.includes('ned.'),
           'radnici': {
             'kuvarice': {
               'smene': [[], [], []],
