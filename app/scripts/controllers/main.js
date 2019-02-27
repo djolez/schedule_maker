@@ -380,7 +380,7 @@ angular.module('scheduleMakerApp')
       }
       $scope.formDirty = true;
 
-      var radnik = nadjiRadnikaPoID(radnikID);
+      var radnik = angular.copy(nadjiRadnikaPoID(radnikID));
 
       var isContained = false;
 
@@ -409,8 +409,8 @@ angular.module('scheduleMakerApp')
       }
       $scope.formDirty = true;
 
-      // Mora zboh apdejta neradnih dana, ukoliko su u medjuvremenu promenjeni
-      radnik = nadjiRadnikaPoID(radnik.id);
+      // Mora zbog apdejta neradnih dana, ukoliko su u medjuvremenu promenjeni
+      radnik = angular.copy(nadjiRadnikaPoID(radnik.id));
 
       if(radnik.type !== acceptedType)
         return;
@@ -435,8 +435,7 @@ angular.module('scheduleMakerApp')
     $scope.neradniDani = [];
 
     $scope.disableNeradniDani = function(radnik) {
-      console.log("disableNeradniDani", radnik);
-
+      
       if(radnik === null || !radnik.neradniDani)
         return;
 
