@@ -1,5 +1,5 @@
 angular.module('scheduleMakerApp')
-  .directive('radniciList', function(){
+  .directive('radniciList', function(NeradniDanEnum){
       return {
         restrict: 'E',
         scope: {
@@ -31,14 +31,13 @@ angular.module('scheduleMakerApp')
           };
 
           $scope.neradniDani = [];
-          var neradniDanEnum = Object.freeze({SLOBODAN: 'slobodan-dan', BOLOVANJE: 'bolovanje', GODISNJI: 'godisnji-odmor'});
-          $scope.neradniDanTypeModel = neradniDanEnum.SLOBODAN;
+          $scope.neradniDanEnum = NeradniDanEnum;
+          $scope.neradniDanTypeModel = NeradniDanEnum.Slobodan;
 
           $scope.$watch('neradniDani', function(newValue, oldValue){
               if(newValue) {
                   if($scope.radnikEdit)
                     $scope.radnikEdit.neradniDani = angular.copy(newValue);
-                    console.log('!!!!!!!!!!!!!!', newValue);
               }
           }, true);
 
