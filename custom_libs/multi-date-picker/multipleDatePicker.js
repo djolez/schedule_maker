@@ -11,7 +11,7 @@
  */
 (function (angular) {
     'use strict';
-    var multipleDatePicker = function () {
+    var multipleDatePicker = function (NeradniDanEnum) {
             return {
                 restrict: 'AE',
                 scope: {
@@ -403,12 +403,20 @@
                         }
 
                         // CUSTOM FUNCTIONALITY
-                        // if(day.mdp.dayType) {
-                        //   css += ' ' + day.mdp.dayType;
-                        //
-                        //   console.log("~~~~~~~~~~~~~~", css);
-                        // }
-                        css += ' ' + day.mdp.dayType;
+                        if(typeof day.mdp.dayType !== 'undefined') {
+                          switch(day.mdp.dayType) {
+                            case NeradniDanEnum.Slobodan:
+                              css += ' slobodan-dan';
+                              break;
+                            case NeradniDanEnum.Godisnji:
+                              css += ' godisnji-odmor';
+                              break;
+                            case NeradniDanEnum.Bolovanje:
+                              css += ' bolovanje';
+                              break;
+                          }
+                        }
+
                         return css;
                     };
 
@@ -552,8 +560,7 @@
                         }
 
                         var isRedraw = oldMonth === scope.monthToDisplay && oldYear === scope.yearToDisplay;
-                        console.log(isRedraw);
-
+                        
                         var currentIndex = -1;
 
                         for (var j = 0; j < maxDays; j++) {
