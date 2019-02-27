@@ -52,7 +52,11 @@ Reorder unutar polja dragdrop
 
 Proveriti da li radi menjanje meseca i onda unosenje neradnih dana
 
-formDirty da se aktivira i kada se menja radnik
+formDirty da se aktivira i kada se menja radnike
+
+Prepravi model za februar
+
+Radnici se kopiraju po referenci u tabeli
 
 #######################################################################################################
 

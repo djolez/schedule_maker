@@ -8,7 +8,7 @@
  * Controller of the scheduleMakerApp
  */
 angular.module('scheduleMakerApp')
-  .controller('MainCtrl', function ($scope, $uibModal, $sce, $http, $interval, $timeout) {
+  .controller('MainCtrl', function ($scope, $uibModal, $sce, $http, $interval, $timeout, NeradniDanEnum) {
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -30,6 +30,8 @@ angular.module('scheduleMakerApp')
     $scope.selectedRadnik = null;
     $scope.radnikEdit = null;
     $scope.radnikDragging = null;
+
+    $scope.neradniDanEnum = NeradniDanEnum;
 
     var kuvarice = [{'ime': 'Milena', 'boja': '#F07B19', 'type': 'kuvarica'},
                     {'ime': 'Jelena', 'boja': '#B4C60B', 'type': 'kuvarica'},

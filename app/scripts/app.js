@@ -38,3 +38,10 @@ angular
         redirectTo: '/'
       });
   });
+
+angular
+  .module('scheduleMakerApp').constant( 'NeradniDanEnum', {
+  'Slobodan': 1,
+  'Godisnji': 2,
+  'Bolovanje': 3,
+});

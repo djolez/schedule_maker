@@ -45,9 +45,9 @@
     <h4 style="color: red; text-align: center; cursor: pointer;" ng-click="closeRadnikEdit()">ZATVORI&nbsp;<i class="fas fa-times" ></i></h4>
 
     <div class="btn-group">
-      <label class="btn btn-info" ng-model="neradniDanTypeModel" uib-btn-radio="'slobodan-dan'">SL. DAN</label>
-      <label class="btn btn-warning" ng-model="neradniDanTypeModel" uib-btn-radio="'godisnji-odmor'">GOD. ODMOR</label>
-      <label class="btn btn-danger" ng-model="neradniDanTypeModel" uib-btn-radio="'bolovanje'">BOLOVANJE</label>
+      <label class="btn btn-info" ng-model="neradniDanTypeModel" uib-btn-radio="neradniDanEnum.Slobodan">SL. DAN</label>
+      <label class="btn btn-warning" ng-model="neradniDanTypeModel" uib-btn-radio="neradniDanEnum.Godisnji">GOD. ODMOR</label>
+      <label class="btn btn-danger" ng-model="neradniDanTypeModel" uib-btn-radio="neradniDanEnum.Bolovanje">BOLOVANJE</label>
     </div>
 
     <!-- <div class="btn-group">
