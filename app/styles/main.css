@@ -145,12 +145,12 @@ span.radnik-name {
 }
 
 .picker-day.picker-selected.slobodan-dan {
-    background-color: #31b0d5 !important;
+    background-color: #d9534f !important;
     color: #fff;
 }
 
 td.disabled-slobodan-dan {
-  background-color: #31b0d533 !important;
+  background-color: #d9534f63 !important;
 }
 
 .picker-day.picker-selected.godisnji-odmor {
@@ -163,12 +163,12 @@ td.disabled-godisnji-odmor {
 }
 
 .picker-day.picker-selected.bolovanje {
-    background-color: #d9534f !important;
+    background-color: #31b0d5 !important;
     color: #fff;
 }
 
 td.disabled-bolovanje {
-  background-color: #d9534f63 !important;
+  background-color: #31b0d533 !important;
 }
 
 .picker-day:hover{

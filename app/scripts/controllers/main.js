@@ -266,6 +266,62 @@ angular.module('scheduleMakerApp')
       $scope.printDaysSet = false;
     };
 
+    function transformModel(model) {
+      model.mesec.dani.forEach(function(d) {
+        d.radnici.konobari.smene.forEach(function(s) {
+          s.forEach(function(r) {
+            if(r.neradniDani) {
+              for (var i = 0; i < r.neradniDani.length; i++) {
+                r.neradniDani[i] = {
+                  'moment': r.neradniDani[i],
+                  'dayType': NeradniDanEnum.Slobodan
+                };
+              }
+            }
+          })
+        });
+
+        d.radnici.kuvarice.smene.forEach(function(s) {
+          s.forEach(function(r) {
+            if(r.neradniDani) {
+              for (var i = 0; i < r.neradniDani.length; i++) {
+                r.neradniDani[i] = {
+                  'moment': r.neradniDani[i],
+                  'dayType': NeradniDanEnum.Slobodan
+                };
+              }
+            }
+          })
+        });
+      });
+
+      model.radnici.konobari.forEach(function(r) {
+        if(r.neradniDani) {
+          for (var i = 0; i < r.neradniDani.length; i++) {
+            r.neradniDani[i] = {
+              'moment': r.neradniDani[i],
+              'dayType': NeradniDanEnum.Slobodan
+            };
+          }
+        }
+      });
+
+      model.radnici.kuvarice.forEach(function(r) {
+        if(r.neradniDani) {
+          for (var i = 0; i < r.neradniDani.length; i++) {
+            r.neradniDani[i] = {
+              'moment': r.neradniDani[i],
+              'dayType': NeradniDanEnum.Slobodan
+            };
+          }
+        }
+      });
+
+
+      console.log('Model transformed: ', model);
+      return model;
+    }
+
     function getModelCall(month) {
       $http.get("http://localhost:5000/model", {'params': {'month': month}})
         .then(function (response) {
@@ -282,8 +338,8 @@ angular.module('scheduleMakerApp')
               console.log('Received model from server');
 
               response.data.model.mesec.momentModel = moment(response.data.model.mesec.momentModel);
+              // $scope.model = transformModel(response.data.model);
               $scope.model = response.data.model;
-              // $scope.model.radnici = response.data.radnici;
             }
 
             return response;
@@ -435,7 +491,7 @@ angular.module('scheduleMakerApp')
     $scope.neradniDani = [];
 
     $scope.disableNeradniDani = function(radnik) {
-      
+
       if(radnik === null || !radnik.neradniDani)
         return;
 
