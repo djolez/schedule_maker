@@ -1,14 +1,8 @@
 <div class="row" id="printable">
 
-  <div class="col-lg-12">
+  <div class="col-lg-12" ng-class="saveError ? 'bg-light-red' : ''">
+    <h1 ng-if="saveError" style="color: red; font-weight: bold; text-align: center; margin-bottom: 30px;">Došlo je do greške prilikom čuvanja, buduće izmene verovatno neće biti sačuvane</h1>
     <h2 style="text-align: center; margin-top: 0; margin-bottom: 20px;">
-      <!-- <select ng-model="raspored.izabraniMesec" ng-options="formatMonth(mesec) for mesec in raspored.meseci" ng-change="osveziModel(raspored.izabraniMesec)">
-      </select> -->
-
-      <!-- <select ng-model="selectedMesec" ng-options="mesec for mesec in availableMonths" ng-change="getModel(selectedMesec)">
-      </select> -->
-
-      <!-- {{aktivniMesec.ime}} -->
 
       <select ng-model="selectedMesec" ng-change="getModel(selectedMesec)">
         <option ng-repeat="mesec in availableMonths" ng-value="mesec">{{mesec}}</option>
@@ -27,51 +21,12 @@
                     disable-neradni-dani="disableNeradniDani"
                     reset-neradni-dani="resetNeradniDani"
                     izbrisi-iz-rasporeda="izbrisiIzRasporeda"
-                    current-month="model.mesec.momentModel">
+                    current-month="model.mesec.momentModel"
+                    form-dirty="formDirty">
       </radnici-list>
-
-
-      <!-- <ul style="text-align: right; list-style: none;" class="font-big">
-        <li ng-repeat="item in radnici.kuvarice"
-          dnd-draggable="item"
-          dnd-type="'kuvarice'"
-          dnd-effect-allowed="copy"
-          dnd-selected="models.selected = item"
-          dnd-dragstart="onDragStart();"
-          ng-class="{'selected': models.selected === item}">
-          <p class="badge" ng-style="{'background-color': item.boja}" ng-dblclick="radnikEdit(item);" style="white-space:pre;">{{item.ime}}&#9;&#9;{{item.ukupnoDana}}</p>
-        </li>
-      </ul> -->
-
-
-      <!-- <ul style="list-style: none; padding-left: 5px;" class="font-big radnici-list">
-        <li ng-repeat="item in radnici.kuvarice"
-            ng-class="{'selected-radnik': item.selected, 'editing-radnik': item.id === radnikEdit.id}"
-            ng-mouseover="item.hover=true;"
-            ng-mouseleave="item.hover=false;">
-          <p class="badge" ng-style="{'background-color': item.boja}" ng-click="radnikSelect(item);" style="white-space:pre; cursor: pointer;">{{item.ime}}&#9;&#9;{{item.ukupnoDana}}</p>
-          <span ng-show="item.hover" ng-click="izmeniRadnika(item);" style="cursor: pointer; position: relative; top: -4px;"><i class="far fa-calendar" ></i></span>
-        </li>
-      </ul>
-
-      <ul ng-show="radnikEdit === null;"
-          class="trashcan"
-          dnd-list="[]"
-          dnd-dragover=""
-          dnd-drop="izbrisiIzRasporeda(item.id);">
-        <li><i class="far fa-trash-alt" style="font-size: 150px; margin-top: 76px; margin-left: 59px;"></i></li>
-      </ul>
-
-      <div class="" ng-show="radnikEdit !== null;">
-        <h4 style="color: red; text-align: center; cursor: pointer;" ng-click="radnikEdit=null;">ZATVORI&nbsp;<i class="fas fa-times" ></i></h4>
-        <multiple-date-picker ng-model="neradniDani"></multiple-date-picker>
-      </div> -->
-
     </div>
 
     <div class="col-lg-8" id="radnici-table" >
-
-      <!-- <h1 style="text-align: center;">{{raspored.model}}</h1> -->
 
       <table class="col-lg-12 font-big radnici print-html">
         <tr>
@@ -86,7 +41,6 @@
           <td class="col-lg-1 raspored-header konobari">II</td>
         </tr>
 
-        <!-- <tr ng-repeat="dan in raspored.dani" ng-class="{'border-bottom-emphasized': dan.nedelja, 'disabled': dan.disabled}"> -->
         <tr ng-repeat="dan in model.mesec.dani" ng-class="{'border-nedelja': dan.nedelja, 'disabled': dan.disabled, 'print-show': printDaysSet && !dan.hidePrint, 'print-ignore': dan.hidePrint}">
 
           <td ng-style="{
@@ -101,8 +55,6 @@
 
                 <i class="fas fa-print"  style="cursor: pointer; float: right; margin-top: 10px; font-size: 20px; color: black !important;" ng-if="!dan.edit && dan.hover" ng-click="markForPrint($index)"></i>
           </td>
-
-          <!-- <grupa-radnika list="dan.radnici.kuvarice" type="'kuvarice'" smena-dodaj="dodajUSmenu" drag-start="radnikDragStart" dragging="radnikDragging" moved="radnikMoved" smena-drop="smenaDrop" selected="selectedKuvarica"></grupa-radnika> -->
 
           <td class="radnici" ng-repeat="smena in dan.radnici.kuvarice.smene track by $index" ng-click="!dan.radnici.kuvarice.disabledType && dodajUSmenu(selectedRadnik, smena, 'kuvarica');" ng-class="{'border-right-emphasized': $last, 'disabled-slobodan-dan': dan.radnici.kuvarice.disabledType === neradniDanEnum.Slobodan, 'disabled-bolovanje': dan.radnici.kuvarice.disabledType === neradniDanEnum.Bolovanje, 'disabled-godisnji-odmor': dan.radnici.kuvarice.disabledType === neradniDanEnum.Godisnji, 'placeholder': radnikDragging === 'kuvarica'}">
             <ul dnd-list
@@ -151,49 +103,6 @@
               </li>
             </ul>
           </td>
-
-          <!-- <td class="radnici" ng-repeat="smena in dan.radnici.konobari.smene track by $index" ng-style="{'border-right': $last ? '3px solid black' : ''}" ng-click="!dan.radnici.konobari.disabled && dodajUSmenu(selectedKonobar, smena, 'konobar');" ng-class="{'disabled': dan.radnici.konobari.disabled}">
-            <ul dnd-list
-                dnd-drop="!dan.radnici.konobari.disabled && smenaDrop(item, smena)"
-                dnd-allowed-types="['konobari']"
-                dnd-horizontal-list="true"
-                class="list-inline">
-              <li ng-repeat="radnik in smena"
-                  dnd-type="'konobari'"
-                  dnd-draggable="radnik"
-                  dnd-dragstart="disableNeradniDani(radnik);"
-                  dnd-moved="smena.splice($index, 1)"
-                  ng-dblclick="smena.cistac ? (smena.cistac=null) : (smena.cistac=radnik.id)">
-
-                <p class="badge" style="font-size: 20px; width: 102px; cursor: pointer;" ng-style="{'background-color': radnik.boja}">
-                  {{radnik.ime}}<span ng-show="smena.cistac === radnik.id"> <i class="fas fa-broom" ></i></span>
-                </p>
-
-              </li>
-            </ul>
-          </td> -->
-
-          <!-- <td class="radnici" ng-repeat="smena in dan.radnici.konobari.smene track by $index" ng-click="dodajUSmenu(selectedKonobar, smena, dan, 'konobar');" ng-class="{'cell-error': smena.error}">
-            <ul dnd-list
-                dnd-drop="smenaDrop(item, smena, dan)"
-                dnd-allowed-types="['konobari']"
-                dnd-horizontal-list="true"
-                class="list-inline">
-              <li ng-repeat="radnik in smena"
-                  dnd-type="'konobari'"
-                  dnd-draggable="radnik"
-                  dnd-dragstart="disableNeradniDani(radnik);"
-                  dnd-moved="smena.splice($index, 1)"
-                  ng-dblclick="smena.cistac ? (smena.cistac=null) : (smena.cistac=radnik.id)">
-
-                <p class="badge" style="font-size: 20px; width: 102px; cursor: pointer;" ng-style="{'background-color': radnik.boja}">
-                  {{radnik.ime}}<span ng-show="smena.cistac === radnik.id"> <i class="fas fa-broom" ></i></span>
-                </p>
-
-              </li>
-            </ul>
-          </td> -->
-
         </tr>
       </table>
 
@@ -206,51 +115,9 @@
                     disable-neradni-dani="disableNeradniDani"
                     reset-neradni-dani="resetNeradniDani"
                     izbrisi-iz-rasporeda="izbrisiIzRasporeda"
-                    current-month="model.mesec.momentModel">
+                    current-month="model.mesec.momentModel"
+                    form-dirty="formDirty">
       </radnici-list>
-
-      <!-- <div class="row">
-        <ul style="list-style: none; padding-left: 5px;" class="font-big radnici-list">
-          <li ng-repeat="item in radnici.konobari"
-              ng-class="{'selected-radnik': item.selected, 'editing-radnik': item.id === radnikEdit.id}"
-              ng-mouseover="item.hover=true;"
-              ng-mouseleave="item.hover=false;">
-            <p class="badge" ng-style="{'background-color': item.boja}" ng-click="radnikSelect(item);" style="white-space:pre; cursor: pointer;">{{item.ime}}&#9;&#9;{{item.ukupnoDana}}</p>
-            <span ng-show="item.hover" ng-click="izmeniRadnika(item);" style="cursor: pointer; position: relative; top: -4px;"><i class="far fa-calendar" ></i></span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="row">
-        <button ng-click="printToCart('printSectionId')" class="button">Print</button>
-
-        <ul ng-show="radnikEdit === null;"
-            class="trashcan"
-            dnd-list="[]"
-            dnd-dragover=""
-            dnd-drop="izbrisiIzRasporeda(item.id);">
-          <li><i class="far fa-trash-alt" style="font-size: 150px; margin-top: 76px; margin-left: 59px;"></i></li>
-        </ul>
-
-        <div class="" ng-show="radnikEdit !== null;">
-          <h4 style="color: red; text-align: center; cursor: pointer;" ng-click="radnikEdit=null;">ZATVORI&nbsp;<i class="fas fa-times" ></i></h4>
-          <multiple-date-picker ng-model="neradniDani"></multiple-date-picker>
-        </div>
-      </div> -->
-
-
-
-      <!-- <ul style="list-style: none;" class="font-big">
-        <li ng-repeat="item in radnici.konobari"
-          dnd-draggable="item"
-          dnd-type="'konobari'"
-          dnd-effect-allowed="copy"
-          dnd-selected="models.selected = item"
-          dnd-dragstart="onDragStart();"
-          ng-class="{'selected': models.selected === item}">
-          <p class="badge" ng-style="{'background-color': item.boja}" ng-dblclick="radnikEdit(item);" style="white-space:pre;">{{item.ime}}&#9;&#9;{{item.ukupnoDana}}</p>
-        </li>
-      </ul>-->
     </div>
 
   </div>

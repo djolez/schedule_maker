@@ -8,7 +8,8 @@ angular.module('scheduleMakerApp')
           currentMonth: "=",
           disableNeradniDani: "=",
           resetNeradniDani: "=",
-          izbrisiIzRasporeda: "="
+          izbrisiIzRasporeda: "=",
+          formDirty: "=",
         },
         templateUrl: '../../views/partials/radnici_list.html',
         link: function($scope, element) {
@@ -42,7 +43,6 @@ angular.module('scheduleMakerApp')
           }, true);
 
           $scope.dayClick = function(e, day) {
-            // console.log("###########################", day);
             day.mdp.dayType = $scope.neradniDanTypeModel;
           };
 
@@ -50,6 +50,7 @@ angular.module('scheduleMakerApp')
             $scope.radnikEdit = null;
             $scope.resetNeradniDani();
             $scope.disableNeradniDani($scope.selected);
+            $scope.formDirty = true;
           };
 
           $scope.radnikSelect = function(radnik) {
@@ -64,33 +65,6 @@ angular.module('scheduleMakerApp')
 
             $scope.selected = radnik;
             $scope.disableNeradniDani($scope.selected);
-
-
-            // $scope.radnikEdit = null;
-
-            // radnik.selected = !radnik.selected;
-            //
-            // if(radnik.selected) {
-            //   $scope.selected[radnik.id] = radnik;
-            //
-            //   disableDaysFromSelected();
-            // }
-            // else {
-            //   delete $scope.selected[radnik.id];
-            //
-            //   // Obrisi disejblovane dane i prodji ponovo kroz ostale selektovane radnike
-            //   $scope.resetNeradniDani();
-            //
-            //   for (var id in $scope.selected) {
-            //       if ($scope.selected.hasOwnProperty(id)) {
-            //           $scope.disableNeradniDani($scope.selected[id]);
-            //
-            //           // $scope.selected[id].neradniDani.forEach(function(dan) {
-            //           //   $scope.raspored.dani[moment(dan).day()-2].disabled = true;
-            //           // });
-            //       }
-            //   }
-            // }
           };
 
 

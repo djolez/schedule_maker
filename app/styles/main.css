@@ -139,6 +139,10 @@ span.radnik-name {
   background-color: #ffffa6 !important;
 }
 
+.bg-light-red {
+  background-color: #ffd7d7 !important;
+}
+
 /* CUSTOM DATEPICKER */
 .btn.active {
   font-weight: bold !important;
