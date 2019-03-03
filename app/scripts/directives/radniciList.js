@@ -8,7 +8,8 @@ angular.module('scheduleMakerApp')
           currentMonth: "=",
           disableNeradniDani: "=",
           resetNeradniDani: "=",
-          izbrisiIzRasporeda: "="
+          izbrisiIzRasporeda: "=",
+          formDirty: "=",
         },
         templateUrl: '../../views/partials/radnici_list.html',
         link: function($scope, element) {
@@ -50,6 +51,7 @@ angular.module('scheduleMakerApp')
             $scope.radnikEdit = null;
             $scope.resetNeradniDani();
             $scope.disableNeradniDani($scope.selected);
+            $scope.formDirty = true;
           };
 
           $scope.radnikSelect = function(radnik) {

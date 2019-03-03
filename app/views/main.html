@@ -1,6 +1,7 @@
 <div class="row" id="printable">
 
-  <div class="col-lg-12">
+  <div class="col-lg-12" ng-class="saveError ? 'bg-light-red' : ''">
+    <h1 ng-if="saveError" style="color: red; font-weight: bold; text-align: center; margin-bottom: 30px;">Došlo je do greške prilikom čuvanja, buduće izmene verovatno neće biti sačuvane</h1>
     <h2 style="text-align: center; margin-top: 0; margin-bottom: 20px;">
       <!-- <select ng-model="raspored.izabraniMesec" ng-options="formatMonth(mesec) for mesec in raspored.meseci" ng-change="osveziModel(raspored.izabraniMesec)">
       </select> -->
@@ -27,7 +28,8 @@
                     disable-neradni-dani="disableNeradniDani"
                     reset-neradni-dani="resetNeradniDani"
                     izbrisi-iz-rasporeda="izbrisiIzRasporeda"
-                    current-month="model.mesec.momentModel">
+                    current-month="model.mesec.momentModel"
+                    form-dirty="formDirty">
       </radnici-list>
 
 
@@ -206,7 +208,8 @@
                     disable-neradni-dani="disableNeradniDani"
                     reset-neradni-dani="resetNeradniDani"
                     izbrisi-iz-rasporeda="izbrisiIzRasporeda"
-                    current-month="model.mesec.momentModel">
+                    current-month="model.mesec.momentModel"
+                    form-dirty="formDirty">
       </radnici-list>
 
       <!-- <div class="row">

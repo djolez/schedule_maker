@@ -15,8 +15,8 @@ angular.module('scheduleMakerApp')
       'Karma'
     ];
 
-    $scope.PRODUCTION = false;
-    var AUTO_SAVE_INTERVAL = 60000;
+    $scope.PRODUCTION = true;
+    var AUTO_SAVE_INTERVAL = 3 * 60 * 1000;
 
     moment.updateLocale('sr', {
       week: {
@@ -245,15 +245,13 @@ angular.module('scheduleMakerApp')
     }
 
     function resetAll() {
-      $scope.selectedKuvarica = null;
-      $scope.selectedKonobar = null;
       $scope.selectedRadnik = null;
       $scope.resetNeradniDani();
     }
 
-    $scope.resetAllTableFields = function() {
-      resetAll();
-    }
+    // $scope.resetAllTableFields = function() {
+    //   resetAll();
+    // }
 
     $scope.removePrintDays = function(lastIndex) {
       if(!$scope.model) {
@@ -267,56 +265,27 @@ angular.module('scheduleMakerApp')
     };
 
     function transformModel(model) {
-      model.mesec.dani.forEach(function(d) {
-        d.radnici.konobari.smene.forEach(function(s) {
-          s.forEach(function(r) {
-            if(r.neradniDani) {
-              for (var i = 0; i < r.neradniDani.length; i++) {
-                r.neradniDani[i] = {
-                  'moment': r.neradniDani[i],
-                  'dayType': NeradniDanEnum.Slobodan
-                };
-              }
-            }
-          })
-        });
-
-        d.radnici.kuvarice.smene.forEach(function(s) {
-          s.forEach(function(r) {
-            if(r.neradniDani) {
-              for (var i = 0; i < r.neradniDani.length; i++) {
-                r.neradniDani[i] = {
-                  'moment': r.neradniDani[i],
-                  'dayType': NeradniDanEnum.Slobodan
-                };
-              }
-            }
-          })
-        });
+      model.radnici.kuvarice.forEach(function(r) {
+        if(r.hasOwnProperty('cistac'))
+          delete r.cistac;
+        if(r.hasOwnProperty('selected'))
+          delete r.selected;
+        if(r.hasOwnProperty('edit'))
+          delete r.edit;
+        if(r.hasOwnProperty('vremeDolaska'))
+          delete r.vremeDolaska;
       });
 
       model.radnici.konobari.forEach(function(r) {
-        if(r.neradniDani) {
-          for (var i = 0; i < r.neradniDani.length; i++) {
-            r.neradniDani[i] = {
-              'moment': r.neradniDani[i],
-              'dayType': NeradniDanEnum.Slobodan
-            };
-          }
-        }
+        if(r.hasOwnProperty('cistac'))
+          delete r.cistac;
+        if(r.hasOwnProperty('selected'))
+          delete r.selected;
+        if(r.hasOwnProperty('edit'))
+          delete r.edit;
+        if(r.hasOwnProperty('vremeDolaska'))
+          delete r.vremeDolaska;
       });
-
-      model.radnici.kuvarice.forEach(function(r) {
-        if(r.neradniDani) {
-          for (var i = 0; i < r.neradniDani.length; i++) {
-            r.neradniDani[i] = {
-              'moment': r.neradniDani[i],
-              'dayType': NeradniDanEnum.Slobodan
-            };
-          }
-        }
-      });
-
 
       console.log('Model transformed: ', model);
       return model;
@@ -338,6 +307,7 @@ angular.module('scheduleMakerApp')
               console.log('Received model from server');
 
               response.data.model.mesec.momentModel = moment(response.data.model.mesec.momentModel);
+
               // $scope.model = transformModel(response.data.model);
               $scope.model = response.data.model;
             }
@@ -368,19 +338,28 @@ angular.module('scheduleMakerApp')
     initMeseci();
     $scope.getModel($scope.selectedMesec);
 
+    function prepareModelForSave(model) {
+      var modelCopy = angular.copy(model);
+
+      // Remove print days
+      for (var i = 0; i < modelCopy.mesec.dani.length; i++) {
+        modelCopy.mesec.dani[i].hidePrint = false;
+      }
+
+      return modelCopy;
+    }
+
     $scope.sacuvajModel = function() {
       if(!$scope.formDirty) {
         return;
       }
+      var preparedModel = prepareModelForSave($scope.model);
 
-      console.log("Saving model 1: ", $scope.model.radnici.kuvarice[0]);
+      console.log("Saving model, prepared: ", preparedModel);
 
-      resetAll();
-      $scope.removePrintDays();
+      // $scope.removePrintDays();
 
-      console.log("Saving model 2: ", $scope.model.radnici.kuvarice[0]);
-
-      $http.post("http://localhost:5000/model", {'model': $scope.model}, {headers: {'Content-Type': 'application/json'} })
+      $http.post("http://localhost:5000/model", {'model': preparedModel}, {headers: {'Content-Type': 'application/json'} })
         .then(function (response) {
             $scope.savedModel = true;
             $scope.formDirty = false;
@@ -389,22 +368,13 @@ angular.module('scheduleMakerApp')
               $scope.savedModel = false;
             }, 2000);
 
+            $scope.saveError = false;
+
             return response;
         }, function (response) {
+            $scope.saveError = true;
             return response;
         });
-
-      // $http.post("http://localhost:5000/model", {'aktivniMesec': $scope.model.mesec, 'radnici': $scope.model.radnici}, {headers: {'Content-Type': 'application/json'} })
-      //   .then(function (response) {
-      //       $scope.savedModel = true;
-      //       $timeout(function() {
-      //         $scope.savedModel = false;
-      //       }, 2000);
-      //
-      //       return response;
-      //   }, function (response) {
-      //       return response;
-      //   });
     };
 
 
@@ -434,7 +404,6 @@ angular.module('scheduleMakerApp')
         resetAll();
         return false;
       }
-      $scope.formDirty = true;
 
       var radnik = angular.copy(nadjiRadnikaPoID(radnikID));
 
@@ -448,6 +417,7 @@ angular.module('scheduleMakerApp')
       if(!isContained && !smena.disabled) {
         smena.push(radnik);
         $scope.resetNeradniDani();
+        $scope.formDirty = true;
         return true;
       }
 
@@ -455,21 +425,53 @@ angular.module('scheduleMakerApp')
       return false;
     };
 
+    // $scope.tableClick = function() {
+    //   $scope.$broadcast("tableClick");
+    // };
+    //
+    // $scope.radnikTableEdit = null;
+    //
+    // $scope.radnikClick = function(radnik, event) {
+    //   console.log('init', radnik);
+    //   radnik.edit = !radnik.edit;
+    //
+    //   if(radnik.edit === true) {
+    //     if($scope.radnikTableEdit) {
+    //       $scope.radnikTableEdit.edit = false;
+    //     }
+    //     $scope.radnikTableEdit = radnik;
+    //
+    //     console.log("Registering");
+    //
+    //     $scope.radnikEdit.deregisterEvent = $scope.$on("tableClick", function(){
+    //       console.log('tableClick', $scope.radnikEdit);
+    //       $scope.radnikEdit.edit = false;
+    //       radnik.deregisterEvent();
+    //     });
+    //   } else if (radnik.edit === false) {
+    //     console.log("Deregistering");
+    //
+    //     $scope.radnikEdit.deregisterEvent();
+    //     $scope.radnikEdit = null;
+    //   }
+    //
+    //   event.stopPropagation()
+    // };
+
     $scope.formDirty = false;
 
-    $scope.dodajUSmenu = function(radnik, smena, acceptedType) {
+    $scope.dodajUSmenu = function(rad, smena, acceptedType) {
 
-      if(!radnik) {
+      if(!rad) {
         console.log("Radnik empty");
         return;
       }
-      $scope.formDirty = true;
+
+      if(rad.type !== acceptedType)
+        return;
 
       // Mora zbog apdejta neradnih dana, ukoliko su u medjuvremenu promenjeni
-      radnik = angular.copy(nadjiRadnikaPoID(radnik.id));
-
-      if(radnik.type !== acceptedType)
-        return;
+      var radnik = angular.copy(nadjiRadnikaPoID(rad.id));
 
       var contains = false;
       smena.forEach(function(r){
@@ -478,9 +480,9 @@ angular.module('scheduleMakerApp')
       });
 
       if(!contains) {
-        // smena.push(angular.copy(radnik));
         smena.push(radnik);
         $scope.uvecajDane(radnik.id);
+        $scope.formDirty = true;
       }
     };
 

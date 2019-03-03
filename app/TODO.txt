@@ -52,13 +52,22 @@ Reorder unutar polja dragdrop
 
 Proveriti da li radi menjanje meseca i onda unosenje neradnih dana
 
-formDirty da se aktivira i kada se menjaju radnici
+// formDirty da se aktivira i kada se menjaju radnici
 
 // Prepravi model za februar
 
 // Radnici se kopiraju po referenci u tabeli
 
 #######################################################################################################
+
+// Skini selekt na save ili ukini autosave, da se ne bi gubila selekcija
+
+// Nekako se stalno ubacuje marker za cistaca (ivica)
+
+Da se skine popover kad se klikne negde drugde
+
+/? Bag sa save-om - ne zna se i dalje sta se desilo
+
 
 
 <script src="bower_components/jquery/dist/jquery.js"></script>
