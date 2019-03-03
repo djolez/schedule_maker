@@ -1,16 +1,3 @@
-
-<!-- <ul style="text-align: right; list-style: none;" class="font-big">
-  <li ng-repeat="item in radnici.kuvarice"
-    dnd-draggable="item"
-    dnd-type="'kuvarice'"
-    dnd-effect-allowed="copy"
-    dnd-selected="models.selected = item"
-    dnd-dragstart="onDragStart();"
-    ng-class="{'selected': models.selected === item}">
-    <p class="badge" ng-style="{'background-color': item.boja}" ng-dblclick="radnikEdit(item);" style="white-space:pre;">{{item.ime}}&#9;&#9;{{item.ukupnoDana}}</p>
-  </li>
-</ul> -->
-
 <div class="row" sticky sticky-class="sticky-div">
 
   <ul style="list-style: none; padding-left: 5px;" class="font-big radnici-list print-html">
@@ -22,15 +9,6 @@
       <p class="badge" ng-style="{'background-color': radnik.boja}" ng-click="radnikSelect(radnik);" style="white-space:pre; cursor: pointer;">{{radnik.ime}}&#9;<span ng-if="radnik.ime!=='Daliborka'">&#9;</span>{{radnik.ukupnoDana}}</p>
       <span ng-show="item.hover" ng-click="izmeniRadnika(radnik);" style="cursor: pointer; position: relative; top: -4px;"><i class="far fa-calendar" ></i></span>
     </li>
-
-    <!-- <li ng-repeat="radnik in radnici"
-        ng-class="{'selected-radnik': radnik.selected, 'editing-radnik': radnik.id === radnikEdit.id}"
-        ng-mouseover="item.hover=true;"
-        ng-mouseleave="item.hover=false;"
-        style="cursor: pointer;">
-      <p class="badge" ng-style="{'background-color': radnik.boja}" ng-click="radnikSelect(radnik);" style="white-space:pre; cursor: pointer;">{{radnik.ime}}&#9;<span ng-if="radnik.ime!=='Daliborka'">&#9;</span>{{radnik.ukupnoDana}}</p>
-      <span ng-show="item.hover" ng-click="izmeniRadnika(radnik);" style="cursor: pointer; position: relative; top: -4px;"><i class="far fa-calendar" ></i></span>
-    </li> -->
   </ul>
 
   <ul ng-show="radnikEdit === null;"
@@ -49,17 +27,7 @@
       <label class="btn btn-warning" ng-model="neradniDanTypeModel" uib-btn-radio="neradniDanEnum.Godisnji">GOD. ODMOR</label>
       <label class="btn btn-info" ng-model="neradniDanTypeModel" uib-btn-radio="neradniDanEnum.Bolovanje">BOLOVANJE</label>
     </div>
-
-    <!-- <div class="btn-group">
-      <label class="btn-xs btn-primary" ng-model="neradniDanTypeModel" style="background-color: #ff5a5a !important;" uib-btn-radio="0">Slobodan dan</label>
-      <label class="btn-xs btn-primary" ng-model="neradniDanTypeModel" style="background-color: #7c7cff !important;" uib-btn-radio="1">Bolovanje</label>
-      <label class="btn-xs btn-primary" ng-model="neradniDanTypeModel" style="background-color: #6ae21e !important;" uib-btn-radio="2">Godisnji odmor</label>
-    </div> -->
-
-    <!-- <input ng-model="neradniDanTypeModel" value="0" type="radio" name="Slobodan dan">
-    <input ng-model="neradniDanTypeModel" value="1" type="radio" name="Bolovanje">
-    <input ng-model="neradniDanTypeModel" value="2" type="radio" name="Godisnji odmor"> -->
-
+    
     <multiple-date-picker ng-model="neradniDani" day-click="dayClick" month="currentMonth" disable-navigation="true"></multiple-date-picker>
   </div>
 
