@@ -43,7 +43,7 @@ angular.module('scheduleMakerApp')
     var konobari = [{'ime': 'Srdjan', 'boja': '#F07B19', 'type': 'konobar'},
                     {'ime': 'Ivica', 'boja': '#B4C60B', 'type': 'konobar'},
                     {'ime': 'Darko', 'boja': '#815955', 'type': 'konobar'},
-                    {'ime': 'Darko 1', 'boja': '#1D3B44', 'type': 'konobar'},
+                    {'ime': 'Milan', 'boja': '#1D3B44', 'type': 'konobar'},
                     {'ime': 'Dragan', 'boja': '#94A68C', 'type': 'konobar'},
                     {'ime': 'Daka', 'boja': '#70CEBA', 'type': 'konobar'}];
 
@@ -208,6 +208,7 @@ angular.module('scheduleMakerApp')
 
             return response;
         }, function (response) {
+			console.log(response);
             return response;
         });
     }
