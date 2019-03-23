@@ -72,10 +72,10 @@
                   ng-click="radnik.edit=!radnik.edit; $event.stopPropagation()">
 
                 <span uib-popover-template="'radnik_modal.html'" class="badge radnik-name" ng-style="{'background-color': radnik.boja}">
-                  {{radnik.ime}}<span ng-if="radnik.cistac"> <i class="fas fa-broom" ></i></span>
+                  {{radnik.ime}}
+                  <span class="vreme-dolaska" ng-show="radnik.vremeDolaska">- {{radnik.vremeDolaska}}</span>
+                  <span ng-if="radnik.cistac"> <i class="fas fa-broom" ></i></span>
                 </span>
-                <span class="vreme-dolaska" ng-show="radnik.vremeDolaska">- {{radnik.vremeDolaska}}</span>
-
               </li>
             </ul>
           </td>
@@ -96,9 +96,10 @@
                   ng-click="radnik.edit=!radnik.edit; $event.stopPropagation()">
 
                 <span uib-popover-template="'radnik_modal.html'" class="badge radnik-name" ng-style="{'background-color': radnik.boja}">
-                  {{radnik.ime}}<span ng-if="radnik.cistac"> <i class="fas fa-broom" ></i></span>
+                  {{radnik.ime}}
+                  <span class="vreme-dolaska" ng-show="radnik.vremeDolaska">- {{radnik.vremeDolaska}}</span>
+                  <span ng-if="radnik.cistac"> <i class="fas fa-broom" ></i></span>
                 </span>
-                <span class="vreme-dolaska" ng-show="radnik.vremeDolaska">- {{radnik.vremeDolaska}}</span>
 
               </li>
             </ul>

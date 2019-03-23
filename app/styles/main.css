@@ -32,8 +32,8 @@ td.radnici ul {
     /* border: 1px solid #00f; */
     margin: 0;
     padding-left: 5px;
-    min-width: 50px;
-    max-width: 70px;
+    min-width: 40px;
+    max-width: 170px;
     min-height: 20px;
     z-index: 2;
     /* height: 100%; */
@@ -103,7 +103,7 @@ td.placeholder > ul {
 
 span.radnik-name {
   font-size: 20px;
-  width: 130px;
+  width: 170px;
   cursor: pointer;
 }
 
