@@ -45,7 +45,7 @@
 
           <td ng-style="{
                 'font-weight': dan.nedelja ? 'bold' : 'normal',
-                'color': !dan.edit && dan.komentar ? 'red' : ''}"
+                'color': ((!dan.edit && dan.komentar) || dan.nedelja) ? 'red' : ''}"
               ng-dblclick="dan.edit = true;"
               ng-mouseover="dan.hover=true;"
               ng-mouseleave="dan.hover=false;"
