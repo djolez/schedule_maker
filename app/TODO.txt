@@ -31,9 +31,6 @@ doda npr neki praznik(sto povecava prvu kolonu) vraca se na normalu.
 
 #######################################################################################################
 
-
-Reorder unutar polja dragdrop
-
 // Samo jedan selektovan
 
 // Da moze da se salje samo do odredjene nedelje raspored
@@ -68,7 +65,13 @@ Da se skine popover kad se klikne negde drugde
 
 /? Bag sa save-om - ne zna se i dalje sta se desilo
 
+Reorder unutar polja dragdrop
 
+// Crvena nedelja
+
+// Vreme u istom redu
+
+Poruka ako server nije pokrenut
 
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/angular/angular.js"></script>
