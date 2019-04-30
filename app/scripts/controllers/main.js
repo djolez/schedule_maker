@@ -86,7 +86,6 @@ angular.module('scheduleMakerApp')
       });
 
       model.mesec.momentModel = moment(model.mesec.ime, 'MMMM-YYYY').locale('sr');
-		console.log(model.mesec);
       var daniUmesecu = getDaysArrayByDate(model.mesec.momentModel);
 
       daniUmesecu.forEach(function(dan) {
