@@ -38,7 +38,8 @@ angular.module('scheduleMakerApp')
                     {'ime': 'Anita', 'boja': '#815955', 'type': 'kuvarica'},
                     {'ime': 'Daliborka', 'boja': '#1D3B44', 'type': 'kuvarica'},
                     {'ime': 'Sandra', 'boja': '#94A68C', 'type': 'kuvarica'},
-                    {'ime': 'Dejana', 'boja': '#70CEBA', 'type': 'kuvarica'}];
+                    {'ime': 'Dejana', 'boja': '#70CEBA', 'type': 'kuvarica'},
+					{'ime': 'Fanika', 'boja': '#F6A5EB', 'type': 'kuvarica'}];
 
     var konobari = [{'ime': 'Srdjan', 'boja': '#F07B19', 'type': 'konobar'},
                     {'ime': 'Ivica', 'boja': '#B4C60B', 'type': 'konobar'},
